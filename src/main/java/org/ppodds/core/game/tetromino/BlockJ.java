@@ -20,8 +20,9 @@ public class BlockJ extends Tetromino {
     }
 
     @Override
-    public void moveDown() {
+    public boolean moveDown() {
 
+        return false;
     }
 
     @Override

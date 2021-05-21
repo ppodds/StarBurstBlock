@@ -23,7 +23,8 @@ public class Tetris {
         controlling = Tetromino.generateRandomTetromino(this);
         gamePane.getChildren().add(controlling);
     }
-    public Pane getPaneInGame(int row, int column) {
+    public Pane getBlockInGame(int row, int column) {
         return board[row][column];
     }
+    public void setBlockInGame(int row, int column, Pane block) { board[row][column] = block; }
 }
