@@ -1,0 +1,10 @@
+.hp-bar {
+  -fx-accent: #84de1c;
+}
+
+.hp-bar-border {
+  -fx-control-inner-background: #556f37;
+  -fx-control-outer-background: #d5d628;
+  -fx-border-width: 2px;
+}
+

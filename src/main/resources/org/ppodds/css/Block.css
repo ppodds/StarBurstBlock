@@ -1,0 +1,5 @@
+.border-block {
+  -fx-background-color: #777777;
+  -fx-border-color: #dcdcdc #555555 #2d2d2d #a0a0a0;
+  -fx-border-width: 1 2 2 0;
+}

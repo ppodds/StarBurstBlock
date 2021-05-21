@@ -1,0 +1,19 @@
+@font-face {
+    src: url('../font/SAOUITT-Bold.ttf');
+}
+
+@font-face {
+    src: url('../font/SAOUITT-Regular.ttf');
+}
+
+.bold {
+    -fx-font-family: "SAO UI TT";
+    -fx-font-weight: bold;
+}
+
+.regular {
+    -fx-font-family: "SAO UI TT";
+}
+
+.chinese-text {
+}
