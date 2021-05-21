@@ -29,7 +29,7 @@
                   <String fx:value="hp-bar-border" />
                </styleClass>
             </ProgressBar>
-            <GridPane fx:id="gamePane" maxHeight="424.0" maxWidth="243.0" style="-fx-background-color: black;">
+            <GridPane fx:id="gamePane" maxHeight="424.0" maxWidth="243.0" onKeyPressed="#handle" style="-fx-background-color: black;">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />

@@ -16,9 +16,9 @@ import java.util.ResourceBundle;
 
 public class Start implements Initializable {
     @FXML
-    Button gameStart;
+    private Button gameStart;
     @FXML
-    MediaView mediaView;
+    private MediaView mediaView;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gameStart.setOnAction(event -> {

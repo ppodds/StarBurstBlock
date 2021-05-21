@@ -3,3 +3,25 @@
   -fx-border-color: #dcdcdc #555555 #2d2d2d #a0a0a0;
   -fx-border-width: 1 2 2 0;
 }
+
+.block-I {
+  -fx-background-image: url('../image/block/Fishing.png');
+}
+.block-J {
+  -fx-background-image: url('../image/block/Fishing.png');
+}
+.block-L {
+  -fx-background-image: url('../image/block/Fishing.png');
+}
+.block-O {
+  -fx-background-image: url('../image/block/Fishing.png');
+}
+.block-S {
+  -fx-background-image: url('../image/block/Fishing.png');
+}
+.block-T {
+  -fx-background-image: url('../image/block/Fishing.png');
+}
+.block-Z {
+  -fx-background-image: url('../image/block/Fishing.png');
+}

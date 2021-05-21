@@ -21,9 +21,9 @@ import java.util.ResourceBundle;
 
 public class PreStory implements Initializable, EventHandler<MouseEvent> {
     @FXML
-    ImageView storyImage;
+    private ImageView storyImage;
     @FXML
-    Label storyText;
+    private Label storyText;
 
     private StoryData story;
     private FadeTransition ft;

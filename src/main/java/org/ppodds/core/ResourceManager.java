@@ -42,4 +42,7 @@ public class ResourceManager {
         }
 
     }
+    public static URL getStyleSheet(String fileName) {
+        return getResource("css/" + fileName);
+    }
 }
