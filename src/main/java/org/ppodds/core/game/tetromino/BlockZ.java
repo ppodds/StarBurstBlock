@@ -2,46 +2,20 @@ package org.ppodds.core.game.tetromino;
 
 import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
-import org.ppodds.core.game.TetrominoState;
 
-public class BlockZ extends Tetromino{
-    public BlockZ(TetrominoState state, Tetris game) {
-        super(state, game);
+public class BlockZ extends Tetromino {
+    public BlockZ(Tetris game) {
+        super(game);
     }
 
     @Override
-    public void spin(SpinDirection direction) {
+    public boolean spin(SpinDirection direction) {
         switch (direction) {
-            case LEFT:
+            case CLOCKWISE:
                 break;
-            case RIGHT:
+            case COUNTERCLOCKWISE:
                 break;
         }
-    }
-
-    @Override
-    public boolean moveDown() {
-
         return false;
-    }
-
-    @Override
-    public void hardDrop() {
-
-    }
-
-    @Override
-    public void moveLeft() {
-
-    }
-
-    @Override
-    public void moveRight() {
-
-    }
-
-    @Override
-    protected void setOnBoard() {
-
     }
 }

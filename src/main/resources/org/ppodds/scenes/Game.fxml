@@ -15,12 +15,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #e4e4e4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.Game">
+<HBox fx:id="handler" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #e4e4e4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.Game">
    <children>
       <VBox>
          <children>
-            <Label contentDisplay="CENTER" maxHeight="60.0" maxWidth="240.0" minHeight="60.0" minWidth="240.0" prefHeight="60.0" prefWidth="240.0" style="-fx-font-size: 39; -fx-alignment: center;" styleClass="regular" stylesheets="@../css/UI.css" text="The Gleam Eyes" textAlignment="CENTER" />
-            <ProgressBar fx:id="bossHpBar" maxHeight="20.0" maxWidth="200.0" minHeight="20.0" minWidth="200.0" prefHeight="20.0" prefWidth="200.0" progress="1.0" stylesheets="@../css/HPbar.css">
+            <Label contentDisplay="CENTER" focusTraversable="false" maxHeight="60.0" maxWidth="240.0" minHeight="60.0" minWidth="240.0" prefHeight="60.0" prefWidth="240.0" style="-fx-font-size: 39; -fx-alignment: center;" styleClass="regular" stylesheets="@../css/UI.css" text="The Gleam Eyes" textAlignment="CENTER" />
+            <ProgressBar fx:id="bossHpBar" focusTraversable="false" maxHeight="20.0" maxWidth="200.0" minHeight="20.0" minWidth="200.0" prefHeight="20.0" prefWidth="200.0" progress="1.0" stylesheets="@../css/HPbar.css">
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
@@ -29,7 +29,7 @@
                   <String fx:value="hp-bar-border" />
                </styleClass>
             </ProgressBar>
-            <GridPane fx:id="gamePane" maxHeight="424.0" maxWidth="243.0" onKeyPressed="#handle" style="-fx-background-color: black;">
+            <GridPane fx:id="gamePane" focusTraversable="true" maxHeight="424.0" maxWidth="243.0" style="-fx-background-color: black;">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -201,8 +201,8 @@
                   <Image url="@../image/story/GleamEyes.jpg" />
                </image>
             </ImageView>
-            <Label prefHeight="85.0" prefWidth="616.0" style="-fx-alignment: center; -fx-font-size: 30;" styleClass="regular" stylesheets="@../css/UI.css" text="Fighting Message" />
-            <TextArea fx:id="logArea" editable="false" prefHeight="206.0" prefWidth="616.0" styleClass="fighting-message" stylesheets="@../css/Story.css" />
+            <Label focusTraversable="false" prefHeight="85.0" prefWidth="616.0" style="-fx-alignment: center; -fx-font-size: 30;" styleClass="regular" stylesheets="@../css/UI.css" text="Fighting Message" />
+            <TextArea fx:id="logArea" editable="false" focusTraversable="false" prefHeight="206.0" prefWidth="616.0" styleClass="fighting-message" stylesheets="@../css/Story.css" />
          </children>
       </VBox>
    </children>

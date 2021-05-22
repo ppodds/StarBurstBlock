@@ -12,15 +12,19 @@ public class ResourceManager {
     public static URL getResource(String path) {
         return App.class.getResource(path);
     }
+
     public static InputStream getResourceAsStream(String path) {
         return App.class.getResourceAsStream(path);
     }
+
     public static URL getMedia(String file) {
         return getResource("media/" + file);
     }
+
     public static URL getImage(String type, String file) {
-        return getResource("image/" + type + "/"+ file);
+        return getResource("image/" + type + "/" + file);
     }
+
     public static StoryData getStory(String storyName) {
         Scanner scanner = new Scanner(getResourceAsStream("story/" + storyName + ".txt"));
         ArrayList<String> images = new ArrayList<String>();
@@ -31,6 +35,7 @@ public class ResourceManager {
         }
         return new StoryData(images, storyTexts);
     }
+
     public static Image getPlainImage(String color) {
         switch (color) {
             case "Black":
@@ -42,7 +47,8 @@ public class ResourceManager {
         }
 
     }
+
     public static URL getStyleSheet(String fileName) {
-        return getResource("css/" + fileName);
+        return getResource("css/" + fileName + ".css");
     }
 }

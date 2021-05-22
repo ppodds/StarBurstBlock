@@ -4,7 +4,7 @@ module org.ppodds {
     requires javafx.media;
 
     opens org.ppodds to javafx.fxml;
-    exports org.ppodds;
     opens org.ppodds.controllers to javafx.fxml;
-    exports org.ppodds.controllers;
+
+    exports org.ppodds;
 }

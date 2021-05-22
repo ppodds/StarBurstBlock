@@ -68,8 +68,7 @@ public class PreStory implements Initializable, EventHandler<MouseEvent> {
                 ft.play();
             });
             ft.play();
-        }
-        else {
+        } else {
             App.setRoot("Game");
         }
     }

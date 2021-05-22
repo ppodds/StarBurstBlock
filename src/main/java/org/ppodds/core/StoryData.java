@@ -17,21 +17,17 @@ public class StoryData {
     }
 
     public Pair<Image, String> getNext() {
-        if (imageCurrent != images.size() && storyTextCurrent != storyTexts.size())
-        {
+        if (imageCurrent != images.size() && storyTextCurrent != storyTexts.size()) {
             String img = images.get(imageCurrent++);
             if (img.equals("null"))
                 img += ".jpg";
             return new Pair<Image, String>(new Image(ResourceManager.getImage("story", img).toString()), storyTexts.get(storyTextCurrent++));
-        }
-        else
+        } else
             return null;
     }
 
     public boolean hasNext() {
-        if (imageCurrent != images.size() && storyTextCurrent != storyTexts.size())
-            return true;
-        return false;
+        return imageCurrent != images.size() && storyTextCurrent != storyTexts.size();
     }
 
 }
