@@ -26,14 +26,20 @@ public class Tetris {
     /**
      * 遊戲中被確定下來的方塊紀錄
      * 當計算方塊碰撞時會被檢查
+     * x0 x1 x2 ...
+     * [] [] [] y0
+     * [] [] [] y1
+     * [] [] [] y2
+     * [] [] [] y3
+     * ...
      */
-    private final Pane[][] board = new Pane[10][19];
+    private final Pane[][] board = new Pane[20][10];
 
     /**
      * 紀錄盤面的大小用
      * 方便程式編寫與維護
      */
-    public static final int boardHeight = 19;
+    public static final int boardHeight = 20;
     public static final int boardWidth = 10;
 
     /**
@@ -43,7 +49,7 @@ public class Tetris {
      * @param position 要設定的位置 (盤面上的絕對位置)
      */
     public void setBoardByPosition(Pane pane, Position position) {
-        this.board[position.x][position.y] = pane;
+        this.board[position.y][position.x] = pane;
     }
 
     private Tetris(GridPane gamePane, GridPane hintPane) {
@@ -78,7 +84,7 @@ public class Tetris {
      * @return 盤面該位置的 Block
      */
     public Pane getBlockOnBoard(int posX, int posY) {
-        return board[posX][posY];
+        return board[posY][posX];
     }
 
     /**
@@ -88,7 +94,7 @@ public class Tetris {
      * @return 盤面該位置的 Block
      */
     public Pane getBlockOnBoard(Position pos) {
-        return board[pos.x][pos.y];
+        return board[pos.y][pos.x];
     }
 
     /**
@@ -97,8 +103,8 @@ public class Tetris {
      * @param node    要設定的方塊
      * @param centerX 新的 x 座標
      */
-    public static void setRowIndexByCenterX(Node node, int centerX) {
-        GridPane.setRowIndex(node, centerX + 1);
+    public static void setColumnIndexByCenterX(Node node, int centerX) {
+        GridPane.setColumnIndex(node, centerX + 1);
     }
 
     /**
@@ -107,8 +113,8 @@ public class Tetris {
      * @param node    要設定的方塊
      * @param centerY 新的 y 座標
      */
-    public static void setColumnIndexByCenterY(Node node, int centerY) {
-        GridPane.setColumnIndex(node, centerY + 1);
+    public static void setRowIndexByCenterY(Node node, int centerY) {
+        GridPane.setRowIndex(node, centerY + 1);
     }
 
     /**

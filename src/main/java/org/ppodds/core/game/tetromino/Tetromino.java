@@ -36,7 +36,7 @@ public abstract class Tetromino {
 
     /**
      * 建立新方塊用
-     * <p>
+     *
      * 子類別在繼承時需要在建構子中設定 blockPos 並 call updateBlockPosition
      *
      * @param game Tetris主體物件，用來取得當前遊戲狀態資料
@@ -54,9 +54,9 @@ public abstract class Tetromino {
 
     /**
      * 旋轉 Tetromino ，撞牆的話就停在原地
-     * <p>
-     * 子類別在實作內容必須維護 blockPos 的變化，以保證其他功能能正常執行
-     * 旋轉時也應考慮是否會撞牆，
+     *
+     * 子類別在實作內容必須維護 blockPos 和 state 的變化，以保證其他功能能正常執行
+     * 旋轉時也應考慮是否會撞牆，或超出邊界
      * 結束時需 call updateBlockPosition 以在顯示盤面反映變化
      *
      * @param direction 旋轉的方向
@@ -93,6 +93,10 @@ public abstract class Tetromino {
      */
     public boolean moveLeft() {
         for (int i = 0; i < 4; i++) {
+            // 觸左檢查
+            if (center.x + blocksPos[i].x - 1 < 0) {
+                return true;
+            }
             Pane checkBlock = game.getBlockOnBoard(center.x + blocksPos[i].x - 1, center.y + blocksPos[i].y);
             if (checkBlock != null) {
                 return true;
@@ -104,6 +108,10 @@ public abstract class Tetromino {
 
     public boolean moveRight() {
         for (int i = 0; i < 4; i++) {
+            // 觸右檢查
+            if (center.x + blocksPos[i].x + 1 == Tetris.boardWidth) {
+                return true;
+            }
             Pane checkBlock = game.getBlockOnBoard(center.x + blocksPos[i].x + 1, center.y + blocksPos[i].y);
             if (checkBlock != null) {
                 return true;
@@ -128,7 +136,7 @@ public abstract class Tetromino {
     protected void down() {
         center.y++;
         for (int i = 0; i < 4; i++) {
-            Tetris.setColumnIndexByCenterY(blocks[i], center.y + blocksPos[i].y);
+            Tetris.setRowIndexByCenterY(blocks[i], center.y + blocksPos[i].y);
         }
     }
 
@@ -138,7 +146,7 @@ public abstract class Tetromino {
     protected void left() {
         center.x--;
         for (int i = 0; i < 4; i++) {
-            Tetris.setRowIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
+            Tetris.setColumnIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
         }
     }
 
@@ -148,7 +156,7 @@ public abstract class Tetromino {
     protected void right() {
         center.x++;
         for (int i = 0; i < 4; i++) {
-            Tetris.setRowIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
+            Tetris.setColumnIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
         }
     }
 
@@ -158,11 +166,29 @@ public abstract class Tetromino {
      */
     protected void updateBlockPosition() {
         for (int i = 0; i < blocks.length; i++) {
-            Tetris.setRowIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
-            Tetris.setColumnIndexByCenterY(blocks[i], blocksPos[i].y + center.y);
+            Tetris.setColumnIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
+            Tetris.setRowIndexByCenterY(blocks[i], blocksPos[i].y + center.y);
         }
     }
 
+    /**
+     * 檢查新的 Block 位置是否會導致 Tetromino 超出邊界或是碰撞
+     * 用於 spin 時的檢查
+     * @param newBlocksPos 旋轉過後新的 Block 相對位置
+     * @return 是否會產生碰撞或超出邊界
+     */
+    protected boolean spinCheck(Position[] newBlocksPos) {
+        for (int i = 0; i < 4; i++) {
+            Position newPosition = center.plus(newBlocksPos[i]);
+            // 邊界檢查
+            if (newPosition.y < 0 || newPosition.y == Tetris.boardHeight || newPosition.x == Tetris.boardWidth || newPosition.x < 0) {
+                return true;
+            }
+            if (game.getBlockOnBoard(newPosition) != null)
+                return true;
+        }
+        return false;
+    }
     /**
      * 將方塊固定到面板上，固定後會被計算碰撞
      * 使用於方塊落底
@@ -170,6 +196,49 @@ public abstract class Tetromino {
     protected void setOnBoard() {
         for (int i = 0; i < 4; i++)
             game.setBoardByPosition(blocks[i], center.plus(blocksPos[i]));
+        game.controlling = null;
+    }
+
+    /**
+     * 依照旋轉的方向改變 Tetromino 的狀態
+     * @param direction 旋轉方向
+     */
+    protected void changeState(SpinDirection direction) {
+        switch (direction) {
+            case CLOCKWISE:
+                switch (state) {
+                    case UP:
+                        state = TetrominoState.RIGHT;
+                        break;
+                    case DOWN:
+                        state = TetrominoState.LEFT;
+                        break;
+                    case LEFT:
+                        state = TetrominoState.UP;
+                        break;
+                    case RIGHT:
+                        state = TetrominoState.DOWN;
+                        break;
+                }
+                break;
+            case COUNTERCLOCKWISE:
+                switch (state) {
+                    case UP:
+                        state = TetrominoState.LEFT;
+                        break;
+                    case DOWN:
+                        state = TetrominoState.RIGHT;
+                        break;
+                    case LEFT:
+                        state = TetrominoState.DOWN;
+                        break;
+                    case RIGHT:
+                        state = TetrominoState.UP;
+                        break;
+                }
+                break;
+        }
+
     }
 
     /**

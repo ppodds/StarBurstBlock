@@ -1,5 +1,6 @@
 package org.ppodds.core.game.tetromino;
 
+import javafx.scene.layout.GridPane;
 import org.ppodds.core.game.Position;
 import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
@@ -10,7 +11,7 @@ public class BlockI extends Tetromino {
         super(game);
         this.state = TetrominoState.UP;
         for (int i = 0; i < blocks.length; i++) {
-            blocks[i].getStyleClass().add(".Block-I");
+            blocks[i].getStyleClass().add("block-I");
             blocksPos[i] = new Position(-1 + i, 0);
         }
         updateBlockPosition();
@@ -18,28 +19,28 @@ public class BlockI extends Tetromino {
 
     @Override
     public boolean spin(SpinDirection direction) {
-        Position[] newPositions = new Position[4];
+        Position[] newBlocksPos = new Position[4];
         switch (direction) {
             case CLOCKWISE:
                 switch (state) {
                     case UP:
                         for (int i = 0; i < 4; i++) {
-                            newPositions[i] = new Position(center.x + 1, center.y + i - 1);
+                            newBlocksPos[i] = new Position( 1,  i - 1);
                         }
                         break;
                     case DOWN:
                         for (int i = 0; i < 4; i++) {
-                            newPositions[i] = new Position(center.x, center.y + i - 1);
+                            newBlocksPos[i] = new Position(0,  i - 1);
                         }
                         break;
                     case LEFT:
                         for (int i = 0; i < 4; i++) {
-                            newPositions[i] = new Position(center.x + i - 1, center.y);
+                            newBlocksPos[i] = new Position( i - 1, 0);
                         }
                         break;
                     case RIGHT:
                         for (int i = 0; i < 4; i++) {
-                            newPositions[i] = new Position(center.x + i - 1, center.y - 1);
+                            newBlocksPos[i] = new Position( i - 1,  1);
                         }
                         break;
                 }
@@ -47,14 +48,11 @@ public class BlockI extends Tetromino {
             case COUNTERCLOCKWISE:
                 break;
         }
-        for (int i = 0; i < 4; i++) {
-            if (game.getBlockOnBoard(newPositions[i]) != null)
-                return true;
-        }
-        System.arraycopy(newPositions, 0, blocksPos, 0, 4);
+        if (spinCheck(newBlocksPos))
+            return true;
+        System.arraycopy(newBlocksPos, 0, blocksPos, 0, 4);
         updateBlockPosition();
+        changeState(direction);
         return false;
     }
-
-
 }

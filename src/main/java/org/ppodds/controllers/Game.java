@@ -6,6 +6,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
 
 import java.net.URL;
@@ -31,10 +32,12 @@ public class Game implements Initializable {
         game = Tetris.createNewGame(gamePane, hintPane);
         gameStarted = true;
         gamePane.setOnKeyPressed(event -> {
+            if (game.controlling == null)
+                game.createNewTetromino();
             if (gameStarted)
                 switch (event.getCode()) {
                     case UP:
-                        game.createNewTetromino();
+                        game.controlling.spin(SpinDirection.CLOCKWISE);
                         break;
                     case DOWN:
                         game.controlling.moveDown();
@@ -50,12 +53,13 @@ public class Game implements Initializable {
                         break;
                     case C:
                         break;
+                    case N:
+                        game.createNewTetromino();
+                        break;
                     default:
                         break;
                 }
         });
-        gamePane.requestFocus();
-        System.out.println(gamePane.isFocused());
     }
 
 }
