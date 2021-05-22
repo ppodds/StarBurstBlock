@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
@@ -41,6 +42,14 @@ public class PreStory implements Initializable, EventHandler<MouseEvent> {
             nextStep(1);
         });
         ft.play();
+        storyImage.setOnKeyPressed(e -> {
+            if (e.isControlDown() && e.getCode() == KeyCode.Q) {
+                if (ft.getStatus() == Animation.Status.RUNNING)
+                    ft.jumpTo("end");
+                else
+                    nextStep(1);
+            }
+        });
     }
 
     @Override

@@ -40,23 +40,23 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.Start">
+<Pane minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.Start">
    <children>
-      <ImageView fitHeight="643.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="560.0" fitWidth="960.0" pickOnBounds="true">
          <image>
             <Image url="@../image/background/Aincrad.jpg" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="111.0" prefWidth="925.0" style="-fx-text-fill: white;" styleClass="bold" stylesheets="@../css/UI.css" text="Welcome to Sword Art Online!" textAlignment="CENTER">
+      <Label alignment="CENTER" minHeight="111.0" minWidth="925.0" prefHeight="111.0" prefWidth="925.0" style="-fx-text-fill: white;" styleClass="bold" stylesheets="@../css/UI.css" text="Welcome to Sword Art Online!" textAlignment="CENTER">
          <font>
             <Font size="42.0" />
          </font>
       </Label>
-      <Button fx:id="gameStart" layoutX="365.0" layoutY="389.0" maxHeight="78.0" maxWidth="195.0" minHeight="78.0" minWidth="195.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="195.0" style="-fx-font-size: 29;" styleClass="regular" stylesheets="@../css/UI.css" text="Link Start" textAlignment="CENTER">
+      <Button fx:id="gameStart" layoutX="365.0" layoutY="389.0" minHeight="78.0" minWidth="195.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="195.0" style="-fx-font-size: 29;" styleClass="regular" stylesheets="@../css/UI.css" text="Link Start" textAlignment="CENTER">
          <font>
             <Font name="SAO UI TT Regular" size="29.0" />
          </font>
       </Button>
-      <MediaView fx:id="mediaView" fitHeight="540.0" fitWidth="960.0" visible="false" />
+      <MediaView fx:id="mediaView" fitHeight="560.0" fitWidth="960.0" preserveRatio="false" visible="false" />
    </children>
 </Pane>
