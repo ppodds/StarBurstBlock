@@ -32,29 +32,31 @@ public class Game implements Initializable {
         game = Tetris.createNewGame(gamePane, hintPane);
         gameStarted = true;
         gamePane.setOnKeyPressed(event -> {
-            if (game.controlling == null)
+            if (game.getControlling() == null)
                 game.createNewTetromino();
             if (gameStarted)
                 switch (event.getCode()) {
                     case UP:
-                        game.controlling.spin(SpinDirection.CLOCKWISE);
+                    case X:
+                        game.getControlling().spin(SpinDirection.CLOCKWISE);
+                        break;
+                    case Z:
+                        game.getControlling().spin(SpinDirection.COUNTERCLOCKWISE);
                         break;
                     case DOWN:
-                        game.controlling.moveDown();
+                        game.getControlling().moveDown();
                         break;
                     case LEFT:
-                        game.controlling.moveLeft();
+                        game.getControlling().moveLeft();
                         break;
                     case RIGHT:
-                        game.controlling.moveRight();
+                        game.getControlling().moveRight();
                         break;
                     case SPACE:
-                        game.controlling.hardDrop();
+                        game.getControlling().hardDrop();
                         break;
                     case C:
-                        break;
-                    case N:
-                        game.createNewTetromino();
+                        game.holdCurrentTetromino();
                         break;
                     default:
                         break;

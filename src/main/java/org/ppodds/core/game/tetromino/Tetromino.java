@@ -7,6 +7,9 @@ import org.ppodds.core.game.Position;
 import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
 import org.ppodds.core.game.TetrominoState;
+import org.ppodds.core.game.ui.GamePane;
+import org.ppodds.core.game.ui.Hint;
+import org.ppodds.core.game.ui.HintPane;
 
 import java.util.Random;
 
@@ -18,6 +21,9 @@ public abstract class Tetromino {
      */
     protected Pane[] blocks = new Pane[4];
     protected Position[] blocksPos = new Position[4];
+    /**
+     * 紀錄現在 Tetromino 的方向
+     */
     protected TetrominoState state;
     /**
      * 用來取得當前遊戲狀態用
@@ -29,6 +35,19 @@ public abstract class Tetromino {
      * 若碰撞計算中心位於格線上，則以其左上角格子做基準
      */
     protected Position center;
+    /**
+     * 用來記錄現在是否是 holding 狀態
+     */
+    protected boolean holding = false;
+    /**
+     * 用來記錄是否已進入過遊戲面板中
+     */
+    protected boolean hasJoinedGame = false;
+    /**
+     * 用來記錄是否已被 hold 過
+     */
+    protected boolean hasHold = false;
+
 
     public Position getCenter() {
         return center;
@@ -43,13 +62,28 @@ public abstract class Tetromino {
      */
     public Tetromino(Tetris game) {
         this.game = game;
-        this.center = new Position(4, 1);
-        GridPane gamePane = game.getGamePane();
+        // 一開始會在 Next 提示區塊出現，所以要設定為 提示區塊的 center
+        if (this instanceof BlockI)
+            this.center = new Position(1, 1);
+        else
+            this.center = new Position(1, 2);
         for (int i = 0; i < blocks.length; i++) {
             blocks[i] = new Pane();
             blocks[i].getStylesheets().add(ResourceManager.getStyleSheet("Block").toString());
-            gamePane.getChildren().add(blocks[i]);
         }
+    }
+
+    /**
+     * 讓 Tetromino 加入遊戲面板
+     * 用於上一個 Tetromino 位置確定的時候
+     *
+     * Warring: 會改變 center
+     */
+    public void joinGame() {
+        center = new Position(4, 1);
+        hasJoinedGame = true;
+        game.getGamePane().getChildren().addAll(blocks);
+        updateBlockPosition();
     }
 
     /**
@@ -122,6 +156,41 @@ public abstract class Tetromino {
     }
 
     /**
+     * hold 自己，若已經被 hold 過則無效並回傳 false
+     *
+     * hold 完會重置位置屬性到提醒盤面的初始座標，並且移除在遊戲面板上的顯示
+     * 結束後會在提示面板上顯示
+     * @return 是否成功被 hold
+     */
+    public boolean hold() {
+        if (hasHold)
+            return false;
+        if (this instanceof BlockI)
+            this.center = new Position(1, 1);
+        else
+            this.center = new Position(1, 2);
+        game.getGamePane().getChildren().removeAll(blocks);
+        GridPane hintPane = game.getHintPane();
+        hintPane.getChildren().addAll(blocks);
+        holding = true;
+        hasHold = true;
+        updateBlockPosition();
+        return true;
+    }
+    /**
+     * release 自己， release 完會重置位置屬性到最上方，並且移除在提示面板上的顯示
+     * 結束後會在遊戲面板上顯示
+     */
+    public void release() {
+        center = new Position(4,1);
+        game.getHintPane().getChildren().removeAll(blocks);
+        GridPane gamePane = game.getGamePane();
+        gamePane.getChildren().addAll(blocks);
+        holding = false;
+        updateBlockPosition();
+    }
+
+    /**
      * 將方塊下移到落地為止
      */
     public void hardDrop() {
@@ -136,7 +205,7 @@ public abstract class Tetromino {
     protected void down() {
         center.y++;
         for (int i = 0; i < 4; i++) {
-            Tetris.setRowIndexByCenterY(blocks[i], center.y + blocksPos[i].y);
+            GamePane.setRowIndexByCenterY(blocks[i], center.y + blocksPos[i].y);
         }
     }
 
@@ -146,7 +215,7 @@ public abstract class Tetromino {
     protected void left() {
         center.x--;
         for (int i = 0; i < 4; i++) {
-            Tetris.setColumnIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
+            GamePane.setColumnIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
         }
     }
 
@@ -156,18 +225,36 @@ public abstract class Tetromino {
     protected void right() {
         center.x++;
         for (int i = 0; i < 4; i++) {
-            Tetris.setColumnIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
+            GamePane.setColumnIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
         }
     }
 
     /**
+     * 更新方塊的當前位置，可用於在提示面板與遊戲面板的情形
+     *
+     * Warring:
      * 此方法並不會改變 board 的值，因此僅為顯示用途，並不會作為碰撞計算依據
      * 若需要讓他被碰撞計算，應使用 setOnBoard 方法
      */
-    protected void updateBlockPosition() {
-        for (int i = 0; i < blocks.length; i++) {
-            Tetris.setColumnIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
-            Tetris.setRowIndexByCenterY(blocks[i], blocksPos[i].y + center.y);
+    public void updateBlockPosition() {
+        if (hasJoinedGame) {
+            if (!holding)
+                for (int i = 0; i < blocks.length; i++) {
+                    GamePane.setColumnIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
+                    GamePane.setRowIndexByCenterY(blocks[i], blocksPos[i].y + center.y);
+                }
+            else
+                for (int i = 0; i < blocks.length; i++) {
+                    HintPane.setColumnIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
+                    HintPane.setRowIndexByCenterY(blocks[i], blocksPos[i].y + center.y, Hint.HOLD);
+                }
+        }
+        else {
+            game.getHintPane().getChildren().addAll(blocks);
+            for (int i = 0; i < blocks.length; i++) {
+                HintPane.setColumnIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
+                HintPane.setRowIndexByCenterY(blocks[i], blocksPos[i].y + center.y, Hint.NEXT);
+            }
         }
     }
 
@@ -196,7 +283,7 @@ public abstract class Tetromino {
     protected void setOnBoard() {
         for (int i = 0; i < 4; i++)
             game.setBoardByPosition(blocks[i], center.plus(blocksPos[i]));
-        game.controlling = null;
+        game.resetControlling();
     }
 
     /**

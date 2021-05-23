@@ -9,7 +9,22 @@ public class Tetris {
     /**
      * 當前玩家按鍵能控制的 Tetromino
      */
-    public Tetromino controlling;
+    private Tetromino controlling;
+
+    public Tetromino getControlling() {
+        return controlling;
+    }
+    public void resetControlling() {
+        controlling = null;
+    }
+    /**
+     * holding 的 Tetromino
+     */
+    private Tetromino holding;
+    /**
+     * 下一個 Tetromino
+     */
+    private Tetromino next;
 
     /**
      * gamePane 用來顯示當前遊戲狀態
@@ -18,10 +33,7 @@ public class Tetris {
     private final GridPane gamePane;
     private final GridPane hintPane;
 
-    /**
-     * holding 的 Tetromino
-     */
-    private Tetromino holding;
+
 
     /**
      * 遊戲中被確定下來的方塊紀錄
@@ -73,7 +85,36 @@ public class Tetris {
      * Warring: 此方法會改變 controlling 的 Tetromino
      */
     public void createNewTetromino() {
-        controlling = Tetromino.generateRandomTetromino(this);
+        if (next == null)
+            next = Tetromino.generateRandomTetromino(this);
+        if (controlling == null) {
+            controlling = next;
+            next = Tetromino.generateRandomTetromino(this);
+            controlling.joinGame();
+        }
+        assert next != null;
+    }
+
+    /**
+     * Hold 玩家當前操作的 Tetromino
+     *
+     * Hold 完以後會初始化下落位置，會從頂部開始重新降落
+     */
+    public void holdCurrentTetromino() {
+        if (holding == null) {
+            if (controlling.hold()) {
+                holding = controlling;
+                controlling = null;
+            }
+        }
+        else {
+            if (controlling.hold()) {
+                holding.release();
+                Tetromino temp = holding;
+                holding = controlling;
+                controlling = temp;
+            }
+        }
     }
 
     /**
@@ -98,26 +139,6 @@ public class Tetris {
     }
 
     /**
-     * 設定已在顯示盤面上的方塊 x 座標
-     *
-     * @param node    要設定的方塊
-     * @param centerX 新的 x 座標
-     */
-    public static void setColumnIndexByCenterX(Node node, int centerX) {
-        GridPane.setColumnIndex(node, centerX + 1);
-    }
-
-    /**
-     * 設定已在顯示盤面上的方塊 y 座標
-     *
-     * @param node    要設定的方塊
-     * @param centerY 新的 y 座標
-     */
-    public static void setRowIndexByCenterY(Node node, int centerY) {
-        GridPane.setRowIndex(node, centerY + 1);
-    }
-
-    /**
      * 取得顯示遊戲盤面的 pane
      *
      * @return 顯示遊戲盤面的 pane
@@ -134,4 +155,5 @@ public class Tetris {
     public GridPane getHintPane() {
         return hintPane;
     }
+
 }

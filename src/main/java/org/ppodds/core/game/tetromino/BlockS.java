@@ -59,6 +59,40 @@ public class BlockS extends Tetromino {
                 }
                 break;
             case COUNTERCLOCKWISE:
+                switch (state) {
+                    case UP:
+                        for (int i = 0; i < 2; i++) {
+                            newBlocksPos[i] = new Position( -1, i-1);
+                        }
+                        for (int i = 0; i < 2; i++) {
+                            newBlocksPos[i+2] = new Position( 0, i);
+                        }
+                        break;
+                    case DOWN:
+                        for (int i = 0; i < 2; i++) {
+                            newBlocksPos[i] = new Position( 0, i-1);
+                        }
+                        for (int i = 0; i < 2; i++) {
+                            newBlocksPos[i+2] = new Position( 1, i);
+                        }
+                        break;
+                    case LEFT:
+                        for (int i = 0; i < 2; i++) {
+                            newBlocksPos[i] = new Position( i-1, 1);
+                        }
+                        for (int i = 0; i < 2; i++) {
+                            newBlocksPos[i+2] = new Position( i, 0);
+                        }
+                        break;
+                    case RIGHT:
+                        for (int i = 0; i < 2; i++) {
+                            newBlocksPos[i] = new Position( i, -1);
+                        }
+                        for (int i = 0; i < 2; i++) {
+                            newBlocksPos[i+2] = new Position( i-1, 0);
+                        }
+                        break;
+                }
                 break;
         }
         if (spinCheck(newBlocksPos))

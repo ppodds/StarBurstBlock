@@ -164,21 +164,21 @@
                   <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.rowIndex="1" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.rowIndex="6" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.rowIndex="11" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.rowIndex="5" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.rowIndex="10" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="1" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="2" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="3" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" />
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="2" />
@@ -186,10 +186,9 @@
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="8" />
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="9" />
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="4" GridPane.rowIndex="11" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="2" GridPane.rowIndex="11" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="border-block" stylesheets="@../css/Block.css" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                </children>
             </GridPane>
             <Label contentDisplay="CENTER" layoutX="3.0" layoutY="120.0" minHeight="60.0" minWidth="95.0" prefHeight="60.0" prefWidth="95.0" style="-fx-font-size: 39; -fx-alignment: center;" styleClass="regular" stylesheets="@../css/UI.css" text="Next" textAlignment="CENTER" />

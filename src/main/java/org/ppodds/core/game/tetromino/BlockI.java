@@ -46,6 +46,28 @@ public class BlockI extends Tetromino {
                 }
                 break;
             case COUNTERCLOCKWISE:
+                switch (state) {
+                    case UP:
+                        for (int i = 0; i < 4; i++) {
+                            newBlocksPos[i] = new Position(0,  i - 1);
+                        }
+                        break;
+                    case DOWN:
+                        for (int i = 0; i < 4; i++) {
+                            newBlocksPos[i] = new Position( 1,  i - 1);
+                        }
+                        break;
+                    case LEFT:
+                        for (int i = 0; i < 4; i++) {
+                            newBlocksPos[i] = new Position( i - 1,  1);
+                        }
+                        break;
+                    case RIGHT:
+                        for (int i = 0; i < 4; i++) {
+                            newBlocksPos[i] = new Position( i - 1, 0);
+                        }
+                        break;
+                }
                 break;
         }
         if (spinCheck(newBlocksPos))
