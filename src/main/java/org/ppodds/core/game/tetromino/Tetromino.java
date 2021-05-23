@@ -249,8 +249,7 @@ public abstract class Tetromino {
      */
     public static Tetromino generateRandomTetromino(Tetris game) {
         Random random = new Random();
-        //char[] types = {'I', 'J', 'L', 'O', 'S', 'T', 'Z'};
-        char[] types = {'I', 'I', 'I', 'I', 'I', 'I', 'I'};
+        char[] types = {'I', 'J', 'L', 'O', 'S', 'T', 'Z'};
         switch (types[random.nextInt(7)]) {
             case 'I':
                 return new BlockI(game);
