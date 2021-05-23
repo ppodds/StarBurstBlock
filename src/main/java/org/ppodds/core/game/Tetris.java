@@ -1,8 +1,13 @@
 package org.ppodds.core.game;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ppodds.core.game.tetromino.Tetromino;
+import org.ppodds.core.game.ui.GamePane;
+import org.ppodds.core.game.ui.Logger;
 
 public class Tetris {
     /**
@@ -14,9 +19,13 @@ public class Tetris {
     /**
      * gamePane 用來顯示當前遊戲狀態
      * hintPane 用來顯示提醒(如下一個 Tetromino )
+     * bossHpBar 用來顯示 Boss HP 狀態
+     * logger 用來紀錄戰鬥訊息
      */
     private final GridPane gamePane;
     private final GridPane hintPane;
+    private final ProgressBar bossHpBar;
+    private final Logger logger;
     /**
      * 遊戲中被確定下來的方塊紀錄
      * 當計算方塊碰撞時會被檢查
@@ -40,10 +49,17 @@ public class Tetris {
      * 下一個 Tetromino
      */
     private Tetromino next;
+    /**
+     * 紀錄 Boss HP用
+     */
+    private int bossHP = 3000;
 
-    private Tetris(GridPane gamePane, GridPane hintPane) {
+
+    private Tetris(GridPane gamePane, GridPane hintPane, ProgressBar bossHpBar, TextArea logArea) {
         this.gamePane = gamePane;
         this.hintPane = hintPane;
+        this.bossHpBar = bossHpBar;
+        this.logger = new Logger(logArea);
     }
 
     /**
@@ -53,8 +69,8 @@ public class Tetris {
      * @param hintPane 用來顯示提醒的盤面
      * @return Tetris 物件，用來管理遊戲
      */
-    public static Tetris createNewGame(GridPane gamePane, GridPane hintPane) {
-        return new Tetris(gamePane, hintPane);
+    public static Tetris createNewGame(GridPane gamePane, GridPane hintPane, ProgressBar bossHpBar, TextArea logArea) {
+        return new Tetris(gamePane, hintPane, bossHpBar, logArea);
     }
 
     public Tetromino getControlling() {
@@ -71,8 +87,18 @@ public class Tetris {
      * @param pane     要設定的盤面
      * @param position 要設定的位置 (盤面上的絕對位置)
      */
-    public void setBoardByPosition(Pane pane, Position position) {
+    public void setBlockOnBoard(Pane pane, Position position) {
         this.board[position.y][position.x] = pane;
+    }
+    /**
+     * 設定盤面上的特定格子為 pane
+     *
+     * @param pane     要設定的盤面
+     * @param posX 要設定的位置 x
+     * @param posY 要設定的位置 y
+     */
+    public void setBlockOnBoard(Pane pane, int posX, int posY) {
+        this.board[posY][posX] = pane;
     }
 
     /**
@@ -123,6 +149,51 @@ public class Tetris {
     }
 
     /**
+     * 消除 board上的方塊，並回傳消掉的行數
+     *
+     * 如果消去成功的話，上面的方塊會往下掉落
+     *
+     * Warring:
+     * 此方法會連顯示在遊戲盤面的 Block 一起刪掉
+     *
+     * @return 消掉的行數
+     */
+    public int eliminate() {
+        int count = 0;
+        int[] downStep = new int[boardHeight];
+        for (int y=0;y < boardHeight;y++) {
+            boolean check = true;
+            for (int x=0;x < boardWidth;x++) {
+                if (getBlockOnBoard(x, y) == null) {
+                    check = false;
+                    break;
+                }
+            }
+            if (check) {
+                count++;
+                for (int i=0;i < y;i++) {
+                    downStep[i]++;
+                }
+                for (int x=0;x < boardWidth;x++) {
+                    gamePane.getChildren().remove(getBlockOnBoard(x, y));
+                    setBlockOnBoard(null, x, y);
+                }
+            }
+        }
+        for (int y=boardHeight-1;y >= 0;y--) {
+            for (int x=0;x < boardWidth;x++) {
+                Pane block = getBlockOnBoard(x, y);
+                if (block != null) {
+                    GamePane.setRowIndexByCenterY(block, y + downStep[y]);
+                    setBlockOnBoard(null, x, y);
+                    setBlockOnBoard(block, x, y+downStep[y]);
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
      * 用盤面的絕對座標取得已固定在盤面上的 Block
      *
      * @param pos Position 物件，用來當作座標
@@ -148,6 +219,16 @@ public class Tetris {
      */
     public GridPane getHintPane() {
         return hintPane;
+    }
+
+    public void damage(int lines, SkillBonus bonus) {
+        if (lines > 0) {
+            int damage = lines * 10;
+            // TODO 之後再根據 bonus 做加成
+            bossHP -= damage;
+            bossHpBar.setProgress(bossHP / 3000f);
+            logger.writeDamageMessage(damage);
+        }
     }
 
 }

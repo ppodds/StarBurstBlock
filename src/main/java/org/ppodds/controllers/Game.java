@@ -1,11 +1,14 @@
 package org.ppodds.controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
 
@@ -26,15 +29,16 @@ public class Game implements Initializable {
 
     private Tetris game;
     private boolean gameStarted = false;
+    private Timeline refresh;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        game = Tetris.createNewGame(gamePane, hintPane);
+        game = Tetris.createNewGame(gamePane, hintPane, bossHpBar, logArea);
         gameStarted = true;
         gamePane.setOnKeyPressed(event -> {
-            if (game.getControlling() == null)
-                game.createNewTetromino();
-            if (gameStarted)
+            if (gameStarted) {
+                if (game.getControlling() == null)
+                    game.createNewTetromino();
                 switch (event.getCode()) {
                     case UP:
                     case X:
@@ -61,7 +65,17 @@ public class Game implements Initializable {
                     default:
                         break;
                 }
+            }
         });
+        if (gameStarted) {
+            refresh = new Timeline(new KeyFrame(Duration.seconds(1f), (e) -> {
+                if (game.getControlling() == null)
+                    game.createNewTetromino();
+                game.getControlling().moveDown();
+            }));
+            refresh.setCycleCount(Timeline.INDEFINITE);
+            refresh.play();
+        }
     }
 
 }

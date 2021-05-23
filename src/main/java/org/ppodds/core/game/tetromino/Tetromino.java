@@ -10,8 +10,8 @@ import org.ppodds.core.game.TetrominoState;
 import org.ppodds.core.game.ui.GamePane;
 import org.ppodds.core.game.ui.Hint;
 import org.ppodds.core.game.ui.HintPane;
+import org.ppodds.core.util.Random;
 
-import java.util.Random;
 
 public abstract class Tetromino {
 
@@ -76,9 +76,8 @@ public abstract class Tetromino {
      * @return Tetromino的子類別物件，可能為各種不同的Block
      */
     public static Tetromino generateRandomTetromino(Tetris game) {
-        Random random = new Random();
         char[] types = {'I', 'J', 'L', 'O', 'S', 'T', 'Z'};
-        switch (types[random.nextInt(7)]) {
+        switch (Random.choose(types)) {
             case 'I':
                 return new BlockI(game);
             case 'J':
@@ -237,6 +236,7 @@ public abstract class Tetromino {
         for (int i = 0; i < 4; i++) {
             GamePane.setRowIndexByCenterY(blocks[i], center.y + blocksPos[i].y);
         }
+        game.damage(game.eliminate(), null);
     }
 
     /**
@@ -313,7 +313,7 @@ public abstract class Tetromino {
      */
     protected void setOnBoard() {
         for (int i = 0; i < 4; i++)
-            game.setBoardByPosition(blocks[i], center.plus(blocksPos[i]));
+            game.setBlockOnBoard(blocks[i], center.plus(blocksPos[i]));
         game.resetControlling();
     }
 
