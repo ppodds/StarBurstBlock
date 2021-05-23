@@ -1,40 +1,22 @@
 package org.ppodds.core.game;
 
-import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ppodds.core.game.tetromino.Tetromino;
 
 public class Tetris {
     /**
-     * 當前玩家按鍵能控制的 Tetromino
+     * 紀錄盤面的大小用
+     * 方便程式編寫與維護
      */
-    private Tetromino controlling;
-
-    public Tetromino getControlling() {
-        return controlling;
-    }
-    public void resetControlling() {
-        controlling = null;
-    }
-    /**
-     * holding 的 Tetromino
-     */
-    private Tetromino holding;
-    /**
-     * 下一個 Tetromino
-     */
-    private Tetromino next;
-
+    public static final int boardHeight = 20;
+    public static final int boardWidth = 10;
     /**
      * gamePane 用來顯示當前遊戲狀態
      * hintPane 用來顯示提醒(如下一個 Tetromino )
      */
     private final GridPane gamePane;
     private final GridPane hintPane;
-
-
-
     /**
      * 遊戲中被確定下來的方塊紀錄
      * 當計算方塊碰撞時會被檢查
@@ -46,23 +28,18 @@ public class Tetris {
      * ...
      */
     private final Pane[][] board = new Pane[20][10];
-
     /**
-     * 紀錄盤面的大小用
-     * 方便程式編寫與維護
+     * 當前玩家按鍵能控制的 Tetromino
      */
-    public static final int boardHeight = 20;
-    public static final int boardWidth = 10;
-
+    private Tetromino controlling;
     /**
-     * 設定盤面上的特定格子為 pane
-     *
-     * @param pane     要設定的盤面
-     * @param position 要設定的位置 (盤面上的絕對位置)
+     * holding 的 Tetromino
      */
-    public void setBoardByPosition(Pane pane, Position position) {
-        this.board[position.y][position.x] = pane;
-    }
+    private Tetromino holding;
+    /**
+     * 下一個 Tetromino
+     */
+    private Tetromino next;
 
     private Tetris(GridPane gamePane, GridPane hintPane) {
         this.gamePane = gamePane;
@@ -78,6 +55,24 @@ public class Tetris {
      */
     public static Tetris createNewGame(GridPane gamePane, GridPane hintPane) {
         return new Tetris(gamePane, hintPane);
+    }
+
+    public Tetromino getControlling() {
+        return controlling;
+    }
+
+    public void resetControlling() {
+        controlling = null;
+    }
+
+    /**
+     * 設定盤面上的特定格子為 pane
+     *
+     * @param pane     要設定的盤面
+     * @param position 要設定的位置 (盤面上的絕對位置)
+     */
+    public void setBoardByPosition(Pane pane, Position position) {
+        this.board[position.y][position.x] = pane;
     }
 
     /**
@@ -97,7 +92,7 @@ public class Tetris {
 
     /**
      * Hold 玩家當前操作的 Tetromino
-     *
+     * <p>
      * Hold 完以後會初始化下落位置，會從頂部開始重新降落
      */
     public void holdCurrentTetromino() {
@@ -106,8 +101,7 @@ public class Tetris {
                 holding = controlling;
                 controlling = null;
             }
-        }
-        else {
+        } else {
             if (controlling.hold()) {
                 holding.release();
                 Tetromino temp = holding;

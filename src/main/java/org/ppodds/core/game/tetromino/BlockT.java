@@ -14,7 +14,7 @@ public class BlockT extends Tetromino {
         // 找不到參數只好手刻了
         blocksPos[0] = new Position(0, -1);
         for (int i = 0; i < 3; i++)
-            blocksPos[i+1] = new Position(i-1, 0);
+            blocksPos[i + 1] = new Position(i - 1, 0);
         updateBlockPosition();
     }
 
@@ -27,24 +27,24 @@ public class BlockT extends Tetromino {
                     case UP:
                         newBlocksPos[0] = new Position(1, 0);
                         for (int i = 0; i < 3; i++) {
-                            newBlocksPos[i+1] = new Position( 0, i-1);
+                            newBlocksPos[i + 1] = new Position(0, i - 1);
                         }
                         break;
                     case DOWN:
                         newBlocksPos[0] = new Position(-1, 0);
                         for (int i = 0; i < 3; i++) {
-                            newBlocksPos[i+1] = new Position( 0, i-1);
+                            newBlocksPos[i + 1] = new Position(0, i - 1);
                         }
                         break;
                     case LEFT:
                         newBlocksPos[0] = new Position(0, -1);
                         for (int i = 0; i < 3; i++)
-                            newBlocksPos[i+1] = new Position( i-1, 0);
+                            newBlocksPos[i + 1] = new Position(i - 1, 0);
                         break;
                     case RIGHT:
                         newBlocksPos[0] = new Position(0, 1);
                         for (int i = 0; i < 3; i++) {
-                            newBlocksPos[i+1] = new Position( i-1, 0);
+                            newBlocksPos[i + 1] = new Position(i - 1, 0);
                         }
                         break;
                 }
@@ -54,25 +54,25 @@ public class BlockT extends Tetromino {
                     case UP:
                         newBlocksPos[0] = new Position(-1, 0);
                         for (int i = 0; i < 3; i++) {
-                            newBlocksPos[i+1] = new Position( 0, i-1);
+                            newBlocksPos[i + 1] = new Position(0, i - 1);
                         }
                         break;
                     case DOWN:
                         newBlocksPos[0] = new Position(1, 0);
                         for (int i = 0; i < 3; i++) {
-                            newBlocksPos[i+1] = new Position( 0, i-1);
+                            newBlocksPos[i + 1] = new Position(0, i - 1);
                         }
                         break;
                     case LEFT:
                         newBlocksPos[0] = new Position(0, 1);
                         for (int i = 0; i < 3; i++) {
-                            newBlocksPos[i+1] = new Position( i-1, 0);
+                            newBlocksPos[i + 1] = new Position(i - 1, 0);
                         }
                         break;
                     case RIGHT:
                         newBlocksPos[0] = new Position(0, -1);
                         for (int i = 0; i < 3; i++)
-                            newBlocksPos[i+1] = new Position( i-1, 0);
+                            newBlocksPos[i + 1] = new Position(i - 1, 0);
                         break;
                 }
                 break;

@@ -1,6 +1,5 @@
 package org.ppodds.core.game.tetromino;
 
-import javafx.scene.layout.GridPane;
 import org.ppodds.core.game.Position;
 import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
@@ -25,22 +24,22 @@ public class BlockI extends Tetromino {
                 switch (state) {
                     case UP:
                         for (int i = 0; i < 4; i++) {
-                            newBlocksPos[i] = new Position( 1,  i - 1);
+                            newBlocksPos[i] = new Position(1, i - 1);
                         }
                         break;
                     case DOWN:
                         for (int i = 0; i < 4; i++) {
-                            newBlocksPos[i] = new Position(0,  i - 1);
+                            newBlocksPos[i] = new Position(0, i - 1);
                         }
                         break;
                     case LEFT:
                         for (int i = 0; i < 4; i++) {
-                            newBlocksPos[i] = new Position( i - 1, 0);
+                            newBlocksPos[i] = new Position(i - 1, 0);
                         }
                         break;
                     case RIGHT:
                         for (int i = 0; i < 4; i++) {
-                            newBlocksPos[i] = new Position( i - 1,  1);
+                            newBlocksPos[i] = new Position(i - 1, 1);
                         }
                         break;
                 }
@@ -49,22 +48,22 @@ public class BlockI extends Tetromino {
                 switch (state) {
                     case UP:
                         for (int i = 0; i < 4; i++) {
-                            newBlocksPos[i] = new Position(0,  i - 1);
+                            newBlocksPos[i] = new Position(0, i - 1);
                         }
                         break;
                     case DOWN:
                         for (int i = 0; i < 4; i++) {
-                            newBlocksPos[i] = new Position( 1,  i - 1);
+                            newBlocksPos[i] = new Position(1, i - 1);
                         }
                         break;
                     case LEFT:
                         for (int i = 0; i < 4; i++) {
-                            newBlocksPos[i] = new Position( i - 1,  1);
+                            newBlocksPos[i] = new Position(i - 1, 1);
                         }
                         break;
                     case RIGHT:
                         for (int i = 0; i < 4; i++) {
-                            newBlocksPos[i] = new Position( i - 1, 0);
+                            newBlocksPos[i] = new Position(i - 1, 0);
                         }
                         break;
                 }

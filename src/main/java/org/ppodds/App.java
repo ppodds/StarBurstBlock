@@ -15,14 +15,6 @@ public class App extends Application {
 
     private static Scene scene;
 
-    @Override
-    public void start(Stage stage) {
-        scene = new Scene(loadFXML("Start"));
-        stage.setTitle("Star Burst Block");
-        stage.setScene(scene);
-        stage.show();
-    }
-
     public static void setRoot(String fxml) {
         Parent root = loadFXML(fxml);
         if (root != null)
@@ -41,6 +33,14 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    @Override
+    public void start(Stage stage) {
+        scene = new Scene(loadFXML("Start"));
+        stage.setTitle("Star Burst Block");
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

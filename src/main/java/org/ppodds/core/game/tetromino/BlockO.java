@@ -12,9 +12,9 @@ public class BlockO extends Tetromino {
         for (int i = 0; i < blocks.length; i++)
             blocks[i].getStyleClass().add("block-O");
         for (int i = 0; i < 2; i++)
-             blocksPos[i] = new Position(i, 0);
+            blocksPos[i] = new Position(i, 0);
         for (int i = 0; i < 2; i++)
-            blocksPos[i+2] = new Position(i, 1);
+            blocksPos[i + 2] = new Position(i, 1);
         updateBlockPosition();
     }
 

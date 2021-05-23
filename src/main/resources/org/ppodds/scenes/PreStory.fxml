@@ -2,16 +2,21 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.PreStory">
-   <children>
-      <ImageView fx:id="storyImage" fitHeight="560.0" fitWidth="960.0" focusTraversable="true" onMouseClicked="#handle" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Label fx:id="storyText" focusTraversable="false" layoutY="410.0" minHeight="125.0" minWidth="960.0" onMouseClicked="#handle" prefHeight="125.0" prefWidth="960.0" styleClass="story-text" stylesheets="@../css/Story.css" textFill="WHITE" visible="false">
-         <font>
-            <Font size="44.0" />
-         </font>
-      </Label>
-   </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0"
+            style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16"
+            fx:controller="org.ppodds.controllers.PreStory">
+    <children>
+        <ImageView fx:id="storyImage" fitHeight="560.0" fitWidth="960.0" focusTraversable="true"
+                   onMouseClicked="#handle" pickOnBounds="true" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        <Label fx:id="storyText" focusTraversable="false" layoutY="410.0" minHeight="125.0" minWidth="960.0"
+               onMouseClicked="#handle" prefHeight="125.0" prefWidth="960.0" styleClass="story-text"
+               stylesheets="@../css/Story.css" textFill="WHITE" visible="false">
+            <font>
+                <Font size="44.0"/>
+            </font>
+        </Label>
+    </children>
 </AnchorPane>

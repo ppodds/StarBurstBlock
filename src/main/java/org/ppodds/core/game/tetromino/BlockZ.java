@@ -12,9 +12,9 @@ public class BlockZ extends Tetromino {
         for (int i = 0; i < blocks.length; i++)
             blocks[i].getStyleClass().add("block-Z");
         for (int i = 0; i < 2; i++)
-            blocksPos[i] = new Position(i-1, -1);
+            blocksPos[i] = new Position(i - 1, -1);
         for (int i = 0; i < 2; i++)
-            blocksPos[i+2] = new Position(i, 0);
+            blocksPos[i + 2] = new Position(i, 0);
         updateBlockPosition();
     }
 
@@ -26,34 +26,34 @@ public class BlockZ extends Tetromino {
                 switch (state) {
                     case UP:
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i] = new Position( 1, i-1);
+                            newBlocksPos[i] = new Position(1, i - 1);
                         }
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i+2] = new Position( 0, i);
+                            newBlocksPos[i + 2] = new Position(0, i);
                         }
                         break;
                     case DOWN:
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i] = new Position( -1, i);
+                            newBlocksPos[i] = new Position(-1, i);
                         }
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i+2] = new Position( 0, i-1);
+                            newBlocksPos[i + 2] = new Position(0, i - 1);
                         }
                         break;
                     case LEFT:
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i] = new Position( i-1, -1);
+                            newBlocksPos[i] = new Position(i - 1, -1);
                         }
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i+2] = new Position( i, 0);
+                            newBlocksPos[i + 2] = new Position(i, 0);
                         }
                         break;
                     case RIGHT:
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i] = new Position( i-1, 0);
+                            newBlocksPos[i] = new Position(i - 1, 0);
                         }
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i+2] = new Position( i, 1);
+                            newBlocksPos[i + 2] = new Position(i, 1);
                         }
                         break;
                 }
@@ -62,34 +62,34 @@ public class BlockZ extends Tetromino {
                 switch (state) {
                     case UP:
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i] = new Position( -1, i);
+                            newBlocksPos[i] = new Position(-1, i);
                         }
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i+2] = new Position( 0, i-1);
+                            newBlocksPos[i + 2] = new Position(0, i - 1);
                         }
                         break;
                     case DOWN:
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i] = new Position( 1, i-1);
+                            newBlocksPos[i] = new Position(1, i - 1);
                         }
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i+2] = new Position( 0, i);
+                            newBlocksPos[i + 2] = new Position(0, i);
                         }
                         break;
                     case LEFT:
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i] = new Position( i-1, 0);
+                            newBlocksPos[i] = new Position(i - 1, 0);
                         }
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i+2] = new Position( i, 1);
+                            newBlocksPos[i + 2] = new Position(i, 1);
                         }
                         break;
                     case RIGHT:
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i] = new Position( i-1, -1);
+                            newBlocksPos[i] = new Position(i - 1, -1);
                         }
                         for (int i = 0; i < 2; i++) {
-                            newBlocksPos[i+2] = new Position( i, 0);
+                            newBlocksPos[i + 2] = new Position(i, 0);
                         }
                         break;
                 }

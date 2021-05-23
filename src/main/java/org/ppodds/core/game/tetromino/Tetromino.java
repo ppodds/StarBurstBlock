@@ -49,13 +49,9 @@ public abstract class Tetromino {
     protected boolean hasHold = false;
 
 
-    public Position getCenter() {
-        return center;
-    }
-
     /**
      * 建立新方塊用
-     *
+     * <p>
      * 子類別在繼承時需要在建構子中設定 blockPos 並 call updateBlockPosition
      *
      * @param game Tetris主體物件，用來取得當前遊戲狀態資料
@@ -74,9 +70,41 @@ public abstract class Tetromino {
     }
 
     /**
+     * 生成隨機方塊
+     *
+     * @param game Tetris主體物件，用來取得當前遊戲狀態資料
+     * @return Tetromino的子類別物件，可能為各種不同的Block
+     */
+    public static Tetromino generateRandomTetromino(Tetris game) {
+        Random random = new Random();
+        char[] types = {'I', 'J', 'L', 'O', 'S', 'T', 'Z'};
+        switch (types[random.nextInt(7)]) {
+            case 'I':
+                return new BlockI(game);
+            case 'J':
+                return new BlockJ(game);
+            case 'L':
+                return new BlockL(game);
+            case 'O':
+                return new BlockO(game);
+            case 'S':
+                return new BlockS(game);
+            case 'T':
+                return new BlockT(game);
+            case 'Z':
+                return new BlockZ(game);
+        }
+        return null;
+    }
+
+    public Position getCenter() {
+        return center;
+    }
+
+    /**
      * 讓 Tetromino 加入遊戲面板
      * 用於上一個 Tetromino 位置確定的時候
-     *
+     * <p>
      * Warring: 會改變 center
      */
     public void joinGame() {
@@ -88,7 +116,7 @@ public abstract class Tetromino {
 
     /**
      * 旋轉 Tetromino ，撞牆的話就停在原地
-     *
+     * <p>
      * 子類別在實作內容必須維護 blockPos 和 state 的變化，以保證其他功能能正常執行
      * 旋轉時也應考慮是否會撞牆，或超出邊界
      * 結束時需 call updateBlockPosition 以在顯示盤面反映變化
@@ -157,9 +185,10 @@ public abstract class Tetromino {
 
     /**
      * hold 自己，若已經被 hold 過則無效並回傳 false
-     *
+     * <p>
      * hold 完會重置位置屬性到提醒盤面的初始座標，並且移除在遊戲面板上的顯示
      * 結束後會在提示面板上顯示
+     *
      * @return 是否成功被 hold
      */
     public boolean hold() {
@@ -177,12 +206,13 @@ public abstract class Tetromino {
         updateBlockPosition();
         return true;
     }
+
     /**
      * release 自己， release 完會重置位置屬性到最上方，並且移除在提示面板上的顯示
      * 結束後會在遊戲面板上顯示
      */
     public void release() {
-        center = new Position(4,1);
+        center = new Position(4, 1);
         game.getHintPane().getChildren().removeAll(blocks);
         GridPane gamePane = game.getGamePane();
         gamePane.getChildren().addAll(blocks);
@@ -231,7 +261,7 @@ public abstract class Tetromino {
 
     /**
      * 更新方塊的當前位置，可用於在提示面板與遊戲面板的情形
-     *
+     * <p>
      * Warring:
      * 此方法並不會改變 board 的值，因此僅為顯示用途，並不會作為碰撞計算依據
      * 若需要讓他被碰撞計算，應使用 setOnBoard 方法
@@ -248,8 +278,7 @@ public abstract class Tetromino {
                     HintPane.setColumnIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
                     HintPane.setRowIndexByCenterY(blocks[i], blocksPos[i].y + center.y, Hint.HOLD);
                 }
-        }
-        else {
+        } else {
             game.getHintPane().getChildren().addAll(blocks);
             for (int i = 0; i < blocks.length; i++) {
                 HintPane.setColumnIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
@@ -261,6 +290,7 @@ public abstract class Tetromino {
     /**
      * 檢查新的 Block 位置是否會導致 Tetromino 超出邊界或是碰撞
      * 用於 spin 時的檢查
+     *
      * @param newBlocksPos 旋轉過後新的 Block 相對位置
      * @return 是否會產生碰撞或超出邊界
      */
@@ -276,6 +306,7 @@ public abstract class Tetromino {
         }
         return false;
     }
+
     /**
      * 將方塊固定到面板上，固定後會被計算碰撞
      * 使用於方塊落底
@@ -288,6 +319,7 @@ public abstract class Tetromino {
 
     /**
      * 依照旋轉的方向改變 Tetromino 的狀態
+     *
      * @param direction 旋轉方向
      */
     protected void changeState(SpinDirection direction) {
@@ -326,34 +358,6 @@ public abstract class Tetromino {
                 break;
         }
 
-    }
-
-    /**
-     * 生成隨機方塊
-     *
-     * @param game Tetris主體物件，用來取得當前遊戲狀態資料
-     * @return Tetromino的子類別物件，可能為各種不同的Block
-     */
-    public static Tetromino generateRandomTetromino(Tetris game) {
-        Random random = new Random();
-        char[] types = {'I', 'J', 'L', 'O', 'S', 'T', 'Z'};
-        switch (types[random.nextInt(7)]) {
-            case 'I':
-                return new BlockI(game);
-            case 'J':
-                return new BlockJ(game);
-            case 'L':
-                return new BlockL(game);
-            case 'O':
-                return new BlockO(game);
-            case 'S':
-                return new BlockS(game);
-            case 'T':
-                return new BlockT(game);
-            case 'Z':
-                return new BlockZ(game);
-        }
-        return null;
     }
 }
 
