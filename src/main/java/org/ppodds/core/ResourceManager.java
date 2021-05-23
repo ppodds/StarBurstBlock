@@ -5,6 +5,7 @@ import org.ppodds.App;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,7 +27,7 @@ public class ResourceManager {
     }
 
     public static StoryData getStory(String storyName) {
-        Scanner scanner = new Scanner(getResourceAsStream("story/" + storyName + ".txt"));
+        Scanner scanner = new Scanner(getResourceAsStream("story/" + storyName + ".txt"), StandardCharsets.UTF_8);
         ArrayList<String> images = new ArrayList<String>();
         ArrayList<String> storyTexts = new ArrayList<String>();
         while (scanner.hasNextLine()) {
