@@ -1,10 +1,14 @@
 package org.ppodds.core.game;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+import org.ppodds.App;
 import org.ppodds.core.game.tetromino.Tetromino;
 import org.ppodds.core.game.ui.GamePane;
 import org.ppodds.core.game.ui.Logger;
@@ -26,6 +30,10 @@ public class Tetris {
     private final GridPane hintPane;
     private final ProgressBar bossHpBar;
     private final Logger logger;
+    /**
+     * 方塊會定時下落的控制
+     */
+    private Timeline refresh;
     /**
      * 遊戲中被確定下來的方塊紀錄
      * 當計算方塊碰撞時會被檢查
@@ -60,6 +68,14 @@ public class Tetris {
         this.hintPane = hintPane;
         this.bossHpBar = bossHpBar;
         this.logger = new Logger(logArea);
+
+        refresh = new Timeline(new KeyFrame(Duration.seconds(1f), (e) -> {
+            if (controlling == null)
+                createNewTetromino();
+            controlling.moveDown();
+        }));
+        refresh.setCycleCount(Timeline.INDEFINITE);
+        refresh.play();
     }
 
     /**
@@ -110,10 +126,10 @@ public class Tetris {
             next = Tetromino.generateRandomTetromino(this);
         if (controlling == null) {
             controlling = next;
-            next = Tetromino.generateRandomTetromino(this);
+            assert controlling != null;
             controlling.joinGame();
+            next = Tetromino.generateRandomTetromino(this);
         }
-        assert next != null;
     }
 
     /**
@@ -228,6 +244,24 @@ public class Tetris {
             bossHP -= damage;
             bossHpBar.setProgress(bossHP / 3000f);
             logger.writeDamageMessage(damage);
+        }
+        if (bossHP < 0) {
+            gameOver(true);
+        }
+    }
+
+    /**
+     * 遊戲結束的控制
+     * @param win 是否勝利
+     */
+    public void gameOver(boolean win) {
+        refresh.stop();
+        gamePane.setOnKeyPressed(null);
+        if (win) {
+            App.setRoot("GoodEnding");
+        }
+        else {
+            logger.writeLossMessage();
         }
     }
 

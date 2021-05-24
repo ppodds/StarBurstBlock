@@ -1,9 +1,7 @@
 package org.ppodds.core.game.tetromino;
 
 import org.ppodds.core.game.Position;
-import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
-import org.ppodds.core.game.TetrominoState;
 
 public class BlockS extends Tetromino {
     public BlockS(Tetris game) {
@@ -19,7 +17,7 @@ public class BlockS extends Tetromino {
     }
 
     @Override
-    public boolean spin(SpinDirection direction) {
+    public SpinStatus spin(SpinDirection direction) {
         Position[] newBlocksPos = new Position[4];
         switch (direction) {
             case CLOCKWISE:
@@ -95,12 +93,14 @@ public class BlockS extends Tetromino {
                 }
                 break;
         }
-        if (spinCheck(newBlocksPos))
-            return true;
+        SpinStatus spinCheckResult = spinCheck(newBlocksPos, false);
+        if (spinCheckResult == SpinStatus.FAIL)
+            return spinCheckResult;
+        toLeftOrRight(newBlocksPos, spinCheckResult);
         System.arraycopy(newBlocksPos, 0, blocksPos, 0, 4);
         updateBlockPosition();
         changeState(direction);
-        return false;
+        return SpinStatus.SUCCESS;
     }
 
 }

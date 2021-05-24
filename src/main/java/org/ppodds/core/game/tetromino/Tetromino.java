@@ -4,13 +4,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ppodds.core.ResourceManager;
 import org.ppodds.core.game.Position;
-import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
-import org.ppodds.core.game.TetrominoState;
 import org.ppodds.core.game.ui.GamePane;
 import org.ppodds.core.game.ui.Hint;
 import org.ppodds.core.game.ui.HintPane;
 import org.ppodds.core.util.Random;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public abstract class Tetromino {
@@ -48,6 +49,14 @@ public abstract class Tetromino {
      */
     protected boolean hasHold = false;
 
+    /**
+     * 用來記錄已經隨機產生的 Tetromino pack 順序
+     */
+    private static ArrayList<Character> pack;
+    /**
+     * 用來記錄現在產生到第幾個 Tetromino
+     */
+    private static int packIndex = 7;
 
     /**
      * 建立新方塊用
@@ -76,8 +85,14 @@ public abstract class Tetromino {
      * @return Tetromino的子類別物件，可能為各種不同的Block
      */
     public static Tetromino generateRandomTetromino(Tetris game) {
-        char[] types = {'I', 'J', 'L', 'O', 'S', 'T', 'Z'};
-        switch (Random.choose(types)) {
+        ArrayList<Character> types = new ArrayList<Character>(Arrays.asList('I', 'J', 'L', 'O', 'S', 'T', 'Z'));
+        if (packIndex == 7) {
+            pack = Random.shuffle(types);
+            packIndex = 0;
+        }
+        char picked = pack.get(packIndex);
+        packIndex++;
+        switch (picked) {
             case 'I':
                 return new BlockI(game);
             case 'J':
@@ -109,6 +124,12 @@ public abstract class Tetromino {
     public void joinGame() {
         center = new Position(4, 1);
         hasJoinedGame = true;
+        for (Position blockPos : blocksPos) {
+            if (game.getBlockOnBoard(center.plus(blockPos)) != null) {
+                game.gameOver(false);
+                return;
+            }
+        }
         game.getGamePane().getChildren().addAll(blocks);
         updateBlockPosition();
     }
@@ -123,7 +144,7 @@ public abstract class Tetromino {
      * @param direction 旋轉的方向
      * @return 是否撞牆
      */
-    public abstract boolean spin(SpinDirection direction);
+    public abstract SpinStatus spin(SpinDirection direction); // TODO 如果旋轉會撞牆還要能繼續旋轉
 
     /**
      * 將方塊下移一格，如果不能下移的話就會被固定在面板上
@@ -236,7 +257,6 @@ public abstract class Tetromino {
         for (int i = 0; i < 4; i++) {
             GamePane.setRowIndexByCenterY(blocks[i], center.y + blocksPos[i].y);
         }
-        game.damage(game.eliminate(), null);
     }
 
     /**
@@ -256,6 +276,24 @@ public abstract class Tetromino {
         center.x++;
         for (int i = 0; i < 4; i++) {
             GamePane.setColumnIndexByCenterX(blocks[i], center.x + blocksPos[i].x);
+        }
+    }
+
+    /**
+     * 用來依據 spinCheck 的結果對 Position[] 做對應的修改
+     * @param blocksPos 要修改的 Position[]
+     * @param spinCheckResult 對應的 spinCheckResult
+     */
+    protected void toLeftOrRight(Position[] blocksPos, SpinStatus spinCheckResult) {
+        switch (spinCheckResult) {
+            case TORIGHT:
+                for (int i=0;i<4;i++)
+                    blocksPos[i] = new Position(blocksPos[i].x + 1, blocksPos[i].y);
+                break;
+            case TOLEFT:
+                for (int i=0;i<4;i++)
+                    blocksPos[i] = new Position(blocksPos[i].x - 1, blocksPos[i].y);
+                break;
         }
     }
 
@@ -294,17 +332,43 @@ public abstract class Tetromino {
      * @param newBlocksPos 旋轉過後新的 Block 相對位置
      * @return 是否會產生碰撞或超出邊界
      */
-    protected boolean spinCheck(Position[] newBlocksPos) {
+    protected SpinStatus spinCheck(Position[] newBlocksPos, boolean hasKicked) {
         for (int i = 0; i < 4; i++) {
             Position newPosition = center.plus(newBlocksPos[i]);
             // 邊界檢查
             if (newPosition.y < 0 || newPosition.y == Tetris.boardHeight || newPosition.x == Tetris.boardWidth || newPosition.x < 0) {
-                return true;
+                if (hasKicked)
+                    return SpinStatus.FAIL;
+                else {
+                    Position[] testBlocksPos = new Position[4];
+                    // 測試右移
+                    if (newPosition.x == 0) {
+                        for (int j=0;j<4;j++) {
+                            testBlocksPos[j] = new Position(newBlocksPos[j].x+1, newBlocksPos[j].y);
+                        }
+                        if (spinCheck(testBlocksPos, true) == SpinStatus.SUCCESS) {
+                            return SpinStatus.TORIGHT;
+                        }
+                        else
+                            return SpinStatus.FAIL;
+                    } // 測試左移
+                    else if (newPosition.x == Tetris.boardWidth) {
+                        for (int j=0;j<4;j++) {
+                            testBlocksPos[j] = new Position(newBlocksPos[j].x-1, newBlocksPos[j].y);
+                        }
+                        if (spinCheck(testBlocksPos, true) == SpinStatus.SUCCESS) {
+                            return SpinStatus.TOLEFT;
+                        }
+                        else
+                            return SpinStatus.FAIL;
+                    }
+                    return SpinStatus.FAIL;
+                }
             }
             if (game.getBlockOnBoard(newPosition) != null)
-                return true;
+                return SpinStatus.FAIL;
         }
-        return false;
+        return SpinStatus.SUCCESS;
     }
 
     /**
@@ -312,9 +376,15 @@ public abstract class Tetromino {
      * 使用於方塊落底
      */
     protected void setOnBoard() {
-        for (int i = 0; i < 4; i++)
-            game.setBlockOnBoard(blocks[i], center.plus(blocksPos[i]));
+        for (int i = 0; i < 4; i++) {
+            Position newPosition = center.plus(blocksPos[i]);
+            if (newPosition.y < 0)
+                game.gameOver(false);
+            else
+                game.setBlockOnBoard(blocks[i], newPosition);
+        }
         game.resetControlling();
+        game.damage(game.eliminate(), null);
     }
 
     /**

@@ -16,4 +16,7 @@ public class Logger {
         String[] people = {"亞絲娜", "克萊茵"};
         writeLine(Random.choose(people) + "對閃耀魔眼進行攻擊，造成了 " + damage + " 點傷害!");
     }
+    public void writeLossMessage() {
+        writeLine("閃耀魔眼擊殺了桐人!");
+    }
 }

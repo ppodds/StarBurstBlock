@@ -17,3 +17,12 @@
 
 .chinese-text {
 }
+
+.button {
+    -fx-background-color: #F9F9F9;
+}
+
+.button:hover {
+    -fx-background-color: #eda60c;
+    -fx-text-fill: #F9F9F9;
+}

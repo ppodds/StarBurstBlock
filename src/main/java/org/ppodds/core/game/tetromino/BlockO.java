@@ -1,9 +1,7 @@
 package org.ppodds.core.game.tetromino;
 
 import org.ppodds.core.game.Position;
-import org.ppodds.core.game.SpinDirection;
 import org.ppodds.core.game.Tetris;
-import org.ppodds.core.game.TetrominoState;
 
 public class BlockO extends Tetromino {
     public BlockO(Tetris game) {
@@ -19,9 +17,9 @@ public class BlockO extends Tetromino {
     }
 
     @Override
-    public boolean spin(SpinDirection direction) {
+    public SpinStatus spin(SpinDirection direction) {
         changeState(direction);
-        return false;
+        return SpinStatus.SUCCESS;
     }
 
 }
