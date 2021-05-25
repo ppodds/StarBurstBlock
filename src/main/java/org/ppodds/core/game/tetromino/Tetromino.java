@@ -384,7 +384,7 @@ public abstract class Tetromino {
                 game.setBlockOnBoard(blocks[i], newPosition);
         }
         game.resetControlling();
-        game.damage(game.eliminate(), null);
+        game.getBoss().damage(game.eliminate(), null);
     }
 
     /**

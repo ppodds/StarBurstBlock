@@ -25,3 +25,6 @@
 .block-Z {
   -fx-background-image: url('../image/block/Klatil.png');
 }
+.block-garbage {
+  -fx-background-color: blue;
+}

@@ -9,9 +9,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.ppodds.App;
+import org.ppodds.core.game.boss.Boss;
 import org.ppodds.core.game.tetromino.Tetromino;
 import org.ppodds.core.game.ui.GamePane;
 import org.ppodds.core.game.ui.Logger;
+import org.ppodds.core.util.Random;
 
 public class Tetris {
     /**
@@ -23,17 +25,22 @@ public class Tetris {
     /**
      * gamePane 用來顯示當前遊戲狀態
      * hintPane 用來顯示提醒(如下一個 Tetromino )
-     * bossHpBar 用來顯示 Boss HP 狀態
+     * boss 用來紀錄 Boss 狀態
      * logger 用來紀錄戰鬥訊息
      */
     private final GridPane gamePane;
     private final GridPane hintPane;
-    private final ProgressBar bossHpBar;
+    private final Boss boss;
     private final Logger logger;
     /**
      * 方塊會定時下落的控制
      */
-    private Timeline refresh;
+    private final Timeline refresh;
+    /**
+     * 遊戲結束的倒數計時
+     */
+    private final Timeline countDown;
+
     /**
      * 遊戲中被確定下來的方塊紀錄
      * 當計算方塊碰撞時會被檢查
@@ -58,16 +65,38 @@ public class Tetris {
      */
     private Tetromino next;
     /**
-     * 紀錄 Boss HP用
+     * 紀錄是否暫停
      */
-    private int bossHP = 3000;
+    private boolean paused;
 
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public void setPaused(boolean paused) {
+        if (this.paused == paused) {
+            return;
+        }
+        if (paused) {
+            refresh.pause();
+            countDown.pause();
+        }
+        else {
+            refresh.play();
+            countDown.play();
+        }
+        this.paused = paused;
+    }
 
     private Tetris(GridPane gamePane, GridPane hintPane, ProgressBar bossHpBar, TextArea logArea) {
         this.gamePane = gamePane;
         this.hintPane = hintPane;
-        this.bossHpBar = bossHpBar;
         this.logger = new Logger(logArea);
+        this.boss = new Boss(this, bossHpBar);
 
         refresh = new Timeline(new KeyFrame(Duration.seconds(1f), (e) -> {
             if (controlling == null)
@@ -76,6 +105,11 @@ public class Tetris {
         }));
         refresh.setCycleCount(Timeline.INDEFINITE);
         refresh.play();
+
+        countDown = new Timeline(new KeyFrame(Duration.minutes(3), (e) -> {
+            gameOver(true);
+        }));
+        countDown.play();
     }
 
     /**
@@ -164,6 +198,10 @@ public class Tetris {
         return board[posY][posX];
     }
 
+    public Boss getBoss() {
+        return boss;
+    }
+
     /**
      * 消除 board上的方塊，並回傳消掉的行數
      *
@@ -237,18 +275,6 @@ public class Tetris {
         return hintPane;
     }
 
-    public void damage(int lines, SkillBonus bonus) {
-        if (lines > 0) {
-            int damage = lines * 10;
-            // TODO 之後再根據 bonus 做加成
-            bossHP -= damage;
-            bossHpBar.setProgress(bossHP / 3000f);
-            logger.writeDamageMessage(damage);
-        }
-        if (bossHP < 0) {
-            gameOver(true);
-        }
-    }
 
     /**
      * 遊戲結束的控制
@@ -256,6 +282,7 @@ public class Tetris {
      */
     public void gameOver(boolean win) {
         refresh.stop();
+        countDown.stop();
         gamePane.setOnKeyPressed(null);
         if (win) {
             App.setRoot("GoodEnding");

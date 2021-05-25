@@ -19,4 +19,11 @@ public class Logger {
     public void writeLossMessage() {
         writeLine("閃耀魔眼擊殺了桐人!");
     }
+    public void writeSkillMessage(String skillName) {
+        switch (skillName) {
+            case "直劈":
+                writeLine("閃耀魔眼發動了 " + skillName + " ，強力的斬擊使得場地的形狀改變了!");
+                break;
+        }
+    }
 }

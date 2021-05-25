@@ -32,7 +32,7 @@ public class Game implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gameStarted = true;
         gamePane.setOnKeyPressed(event -> {
-            if (gameStarted) {
+            if (gameStarted && !game.isPaused()) {
                 if (game.getControlling() == null)
                     game.createNewTetromino();
                 switch (event.getCode()) {
@@ -69,7 +69,7 @@ public class Game implements Initializable {
                             game.gameOver(true);
                             break;
                         case L:
-                            game.damage(10, null);
+                            game.getBoss().damage(10, null);
                             break;
                     }
                 }
