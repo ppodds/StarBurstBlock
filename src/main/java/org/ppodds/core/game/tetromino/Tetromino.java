@@ -386,7 +386,6 @@ public abstract class Tetromino {
         game.resetControlling();
         game.getBoss().damage(game.eliminate(), null);
     }
-
     /**
      * 依照旋轉的方向改變 Tetromino 的狀態
      *

@@ -281,6 +281,7 @@ public class Tetris {
      * @param win 是否勝利
      */
     public void gameOver(boolean win) {
+        paused = true;
         refresh.stop();
         countDown.stop();
         gamePane.setOnKeyPressed(null);
@@ -290,6 +291,20 @@ public class Tetris {
         else {
             logger.writeLossMessage();
         }
+    }
+
+    /**
+     * 設定方塊的自然下落速度倍率
+     * @param ratio 倍數 (0 ~ 1)
+     */
+    public void setBlockDownRate(double ratio) {
+        refresh.setRate(ratio);
+    }
+    /**
+     * 取得方塊的自然下落速率
+     */
+    public double getBlockDownRate() {
+        return refresh.getRate();
     }
 
 }

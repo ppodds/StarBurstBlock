@@ -46,11 +46,12 @@ public class GarbageBlock {
         dropAnimation.setCycleCount(Timeline.INDEFINITE);
         dropAnimation.play();
     }
-
+    // TODO 不知道為甚麼，Boss丟下來的方塊在顯示效果和碰撞上有問題，待修正
     private void set() {
         game.setBlockOnBoard(this.block, this.position.x, this.position.y);
         dropAnimation.stop();
         animationFinished = true;
+        game.getBoss().damage(game.eliminate(), null);
     }
 
     private void down() {
