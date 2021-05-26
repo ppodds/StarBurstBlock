@@ -117,6 +117,8 @@ public class Tetris {
      *
      * @param gamePane 用來顯示當前遊戲狀態的盤面
      * @param hintPane 用來顯示提醒的盤面
+     * @param bossHpBar 用來顯示 Boss HP 的 Progress bar
+     * @param logArea 用來顯示戰鬥訊息的盤面
      * @return Tetris 物件，用來管理遊戲
      */
     public static Tetris createNewGame(GridPane gamePane, GridPane hintPane, ProgressBar bossHpBar, TextArea logArea) {
@@ -302,6 +304,7 @@ public class Tetris {
     }
     /**
      * 取得方塊的自然下落速率
+     * @return 方塊的自然下落速率
      */
     public double getBlockDownRate() {
         return refresh.getRate();

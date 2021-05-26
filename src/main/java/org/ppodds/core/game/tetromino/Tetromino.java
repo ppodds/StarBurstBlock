@@ -330,6 +330,7 @@ public abstract class Tetromino {
      * 用於 spin 時的檢查
      *
      * @param newBlocksPos 旋轉過後新的 Block 相對位置
+     * @param hasKicked 是否已經踢過牆
      * @return 是否會產生碰撞或超出邊界
      */
     protected SpinStatus spinCheck(Position[] newBlocksPos, boolean hasKicked) {
