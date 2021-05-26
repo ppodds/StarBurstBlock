@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.PreStory">
@@ -13,5 +14,6 @@
                 <Font size="44.0" />
             </font>
         </Label>
+      <MediaView fx:id="mediaView" fitHeight="560.0" fitWidth="960.0" preserveRatio="false" visible="false" />
     </children>
 </AnchorPane>

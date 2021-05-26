@@ -31,13 +31,12 @@ public class GoodEnding implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Media ending = new Media(ResourceManager.getMedia("Ending.mp4").toString());
+        Media ending = new Media(ResourceManager.getMedia("GoodEnding.mp4").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(ending);
         mediaPlayer.setAutoPlay(true);
         mediaView.setMediaPlayer(mediaPlayer);
         Platform.runLater(() -> handler.requestFocus());
         handler.setOnKeyPressed(e -> {
-            System.out.println("A");
             if (e.getCode() == KeyCode.ESCAPE)
                 mediaPlayer.setStopTime(mediaPlayer.getCurrentTime().add(Duration.millis(200)));
         });

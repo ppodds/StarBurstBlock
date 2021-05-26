@@ -11,6 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.ppodds.App;
@@ -25,6 +28,8 @@ public class PreStory implements Initializable, EventHandler<MouseEvent> {
     private ImageView storyImage;
     @FXML
     private Label storyText;
+    @FXML
+    private MediaView mediaView;
 
     private StoryData story;
     private FadeTransition ft;
@@ -78,7 +83,17 @@ public class PreStory implements Initializable, EventHandler<MouseEvent> {
             });
             ft.play();
         } else {
-            App.setRoot("Game");
+            Media preStory = new Media(ResourceManager.getMedia("PreStory.mp4").toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(preStory);
+            mediaPlayer.setAutoPlay(true);
+            mediaView.setMediaPlayer(mediaPlayer);
+            mediaView.setVisible(true);
+            mediaView.requestFocus();
+            mediaView.setOnKeyPressed(e -> {
+                if (e.getCode() == KeyCode.ESCAPE)
+                    mediaPlayer.setStopTime(mediaPlayer.getCurrentTime().add(Duration.millis(200)));
+            });
+            mediaPlayer.setOnEndOfMedia(() -> App.setRoot("Game"));
         }
     }
 }

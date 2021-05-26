@@ -46,4 +46,16 @@ public class Logger {
                 break;
         }
     }
+    public void writeGaveOverProgress(int counter) {
+        if (counter == 30) {
+            writeLine("桐人似乎是在準備什麼的樣子...");
+        }
+        else if (counter == 120) {
+            writeLine("桐人看起來快準備好了!");
+        }
+        else if (counter == 180) {
+            writeLine("桐人： 好，可以了。");
+            writeLine("桐人： 切換!");
+        }
+    }
 }

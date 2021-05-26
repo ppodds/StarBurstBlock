@@ -1,19 +1,21 @@
 package org.ppodds.core.game;
 
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.ppodds.App;
+import org.ppodds.core.ResourceManager;
 import org.ppodds.core.game.boss.Boss;
 import org.ppodds.core.game.tetromino.Tetromino;
 import org.ppodds.core.game.ui.GamePane;
 import org.ppodds.core.game.ui.Logger;
-import org.ppodds.core.util.Random;
 
 public class Tetris {
     /**
@@ -37,9 +39,13 @@ public class Tetris {
      */
     private final Timeline refresh;
     /**
-     * 遊戲結束的倒數計時
+     * 遊戲結束的計時器
      */
-    private final Timeline countDown;
+    private final Timeline timer;
+    /**
+     * 遊戲結束的計時器
+     */
+    private int counter=0;
 
     /**
      * 遊戲中被確定下來的方塊紀錄
@@ -83,11 +89,11 @@ public class Tetris {
         }
         if (paused) {
             refresh.pause();
-            countDown.pause();
+            timer.pause();
         }
         else {
             refresh.play();
-            countDown.play();
+            timer.play();
         }
         this.paused = paused;
     }
@@ -106,10 +112,14 @@ public class Tetris {
         refresh.setCycleCount(Timeline.INDEFINITE);
         refresh.play();
 
-        countDown = new Timeline(new KeyFrame(Duration.minutes(3), (e) -> {
-            gameOver(true);
+        timer = new Timeline(new KeyFrame(Duration.seconds(1), (e) -> {
+            counter++;
+            logger.writeGaveOverProgress(counter);
+            if (counter == 180) {
+                gameOver(true);
+            }
         }));
-        countDown.play();
+        timer.play();
     }
 
     /**
@@ -285,13 +295,20 @@ public class Tetris {
     public void gameOver(boolean win) {
         paused = true;
         refresh.stop();
-        countDown.stop();
+        timer.stop();
         gamePane.setOnKeyPressed(null);
         if (win) {
-            App.setRoot("GoodEnding");
+            FadeTransition ft = new FadeTransition(Duration.seconds(3), gamePane.getParent().getParent());
+            ft.setFromValue(1);
+            ft.setToValue(0);
+            ft.setDelay(Duration.seconds(3));
+            ft.setOnFinished(e -> {
+                App.setRoot("GoodEnding");
+            });
+            ft.play();
         }
         else {
-            logger.writeLossMessage();
+            App.setRoot("BadEnding");
         }
     }
 

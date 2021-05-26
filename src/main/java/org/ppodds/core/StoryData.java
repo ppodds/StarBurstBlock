@@ -21,7 +21,10 @@ public class StoryData {
             String img = images.get(imageCurrent++);
             if (img.equals("null"))
                 img += ".jpg";
-            return new Pair<Image, String>(new Image(ResourceManager.getImage("story", img).toString()), storyTexts.get(storyTextCurrent++));
+            String content = storyTexts.get(storyTextCurrent++);
+            if (content.equals("null"))
+                content = "";
+            return new Pair<Image, String>(new Image(ResourceManager.getImage("story", img).toString()), content);
         } else
             return null;
     }
