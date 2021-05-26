@@ -34,7 +34,6 @@ public class GoodEnding implements Initializable {
     @FXML
     private Label storyText;
     private StoryData story;
-    private FadeTransition ft;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,58 +47,22 @@ public class GoodEnding implements Initializable {
                 mediaPlayer.setStopTime(mediaPlayer.getCurrentTime().add(Duration.millis(200)));
         });
         mediaPlayer.setOnEndOfMedia(() -> {
-            // TODO 這裡的動畫怪怪的 還有label的黑條太粗
-            mediaView.setVisible(false);
-            story = ResourceManager.getStory("GoodEnding");
-            storyImage.setImage(ResourceManager.getPlainImage("White"));
-            ft = new FadeTransition(Duration.seconds(1), storyImage);
-            ft.setFromValue(1);
-            ft.setToValue(0);
-            ft.setOnFinished(e -> {
-                storyImage.setImage(ResourceManager.getPlainImage("Black"));
-                storyText.setVisible(true);
-                nextStep(1);
-            });
-            ft.play();
-            storyImage.setOnKeyPressed(e -> {
-                if (e.isControlDown() && e.getCode() == KeyCode.Q) {
-                    if (ft.getStatus() == Animation.Status.RUNNING)
-                        ft.jumpTo("end");
-                    else
-                        nextStep(1);
-                }
-            });
             storyImage.setVisible(true);
             storyText.setVisible(true);
-            storyText.setOnMouseClicked(this::handle);
-            storyImage.setOnMouseClicked(this::handle);
+            mediaView.setVisible(false);
+            story = ResourceManager.getStory("GoodEnding");
+            nextStep();
+            storyText.setOnMouseClicked((e) -> nextStep());
+            storyImage.setOnMouseClicked((e) -> nextStep());
             mediaView.setDisable(true);
         });
     }
-    private void handle(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
-            if (ft.getStatus() == Animation.Status.RUNNING)
-                ft.jumpTo("end");
-            else
-                nextStep(1);
-        }
-    }
 
-    private void nextStep(float fadeDuration) {
+    private void nextStep() {
         if (story.hasNext()) {
-            ft = new FadeTransition(Duration.seconds(fadeDuration), storyImage);
-            ft.setFromValue(1);
-            ft.setToValue(0);
-            ft.setOnFinished(e -> {
-                Pair<Image, String> data = story.getNext();
-                storyImage.setImage(data.getKey());
-                storyText.setText(data.getValue());
-                FadeTransition ft = new FadeTransition(Duration.seconds(fadeDuration), storyImage);
-                ft.setFromValue(0);
-                ft.setToValue(1);
-                ft.play();
-            });
-            ft.play();
+            Pair<Image, String> data = story.getNext();
+            storyImage.setImage(data.getKey());
+            storyText.setText(data.getValue());
         } else {
             App.setRoot("Thank");
         }
