@@ -144,7 +144,7 @@ public abstract class Tetromino {
      * @param direction 旋轉的方向
      * @return 是否撞牆
      */
-    public abstract SpinStatus spin(SpinDirection direction); // TODO 如果旋轉會撞牆還要能繼續旋轉
+    public abstract SpinStatus spin(SpinDirection direction); // TODO T Spin 的規則 ( 有空再弄，或是等人發 PR
 
     /**
      * 將方塊下移一格，如果不能下移的話就會被固定在面板上
@@ -378,12 +378,15 @@ public abstract class Tetromino {
     protected void setOnBoard() {
         for (int i = 0; i < 4; i++) {
             Position newPosition = center.plus(blocksPos[i]);
-            if (newPosition.y < 0)
+            if (newPosition.y < 0) {
                 game.gameOver(false);
+                break;
+            }
             else
                 game.setBlockOnBoard(blocks[i], newPosition);
         }
         game.resetControlling();
+        game.getBoss().addSkillCounter();
         game.getBoss().damage(game.eliminate(), null);
     }
     /**

@@ -8,61 +8,129 @@ import javafx.util.Duration;
 import org.ppodds.core.ResourceManager;
 import org.ppodds.core.game.Position;
 import org.ppodds.core.game.Tetris;
+import org.ppodds.core.game.tetromino.TetrominoState;
 import org.ppodds.core.game.ui.GamePane;
+import org.ppodds.core.game.ui.Hint;
+import org.ppodds.core.game.ui.HintPane;
 
-public class GarbageBlock { // TODO 看來 GarbageBlock也要改成 Group 的形式，否則掉下的先後順序會產生錯誤
+public class GarbageBlock {
+    /**
+     * Pane[] 用來存放一整個 Tetromino 裡面有的 4 個 Pane
+     * 每個對應的 Pane 對 center 的相對座標會被記錄在 Position[] 對應的index中
+     */
+    private Pane[] blocks;
+    private Position[] blocksPos;
+    /**
+     * 用來取得當前遊戲狀態用
+     */
     private final Tetris game;
-    private final Pane block;
-    private Position position;
+
+    /**
+     * 碰撞計算中心位置
+     * 一律以最左上角格子做基準
+     */
+    private Position center;
     private final Timeline dropAnimation;
-    private boolean animationFinished = false; // TODO 如果玩家的方塊在 Boss 方塊落下時剛好在方塊要落下的位置也會產生錯誤。
+    private boolean animationFinished = false;
 
     public boolean isAnimationFinished() {
         return animationFinished;
     }
 
-    public GarbageBlock(Tetris game, Position position) {
-        this.block = new Pane();
+    /**
+     * 新建一個 GarbageBlock
+     * @param game Tetris主體物件，用來取得當前遊戲狀態資料
+     * @param center GarbageBlock 中心位置
+     * @param width GarbageBlock 寬度
+     * @param height GarbageBlock 高度
+     */
+    public GarbageBlock(Tetris game, Position center, int width, int height) {
+        int amount = width * height;
+        blocks = new Pane[amount];
+        this.blocksPos = new Position[amount];
         this.game = game;
-        game.getGamePane().getChildren().add(this.block);
-        this.position = position;
-        block.getStylesheets().add(ResourceManager.getStyleSheet("Block").toString());
-        block.getStyleClass().add("block-garbage");
-        GamePane.setColumnIndexByCenterX(this.block, position.x);
-        GamePane.setRowIndexByCenterY(this.block, position.y);
+        this.center = center;
+        int i = 0;
+        for (int x=0;x<width;x++) {
+            for (int y=height-1;y>=0;y--) {
+                blocks[i] = new Pane();
+                blocks[i].getStylesheets().add(ResourceManager.getStyleSheet("Block").toString());
+                blocks[i].getStyleClass().add("block-garbage");
+                blocksPos[i] = new Position(x, y);
+                i++;
+            }
+        }
+        game.getGamePane().getChildren().addAll(blocks);
+        updateBlockPosition();
         dropAnimation = new Timeline(new KeyFrame(Duration.millis(50), e -> {
-            Position positionNow = getPosition();
-            if (positionNow.y + 1 == Tetris.boardHeight) {
-                set();
-            }
-            if (game.getBlockOnBoard(positionNow.x, positionNow.y+1) != null) {
-                set();
-            }
-            else {
-                down();
-            }
+            game.setPaused(true);
+            moveDown(game);
         }));
         dropAnimation.setCycleCount(Timeline.INDEFINITE);
         dropAnimation.play();
     }
-    // TODO 不知道為甚麼，Boss丟下來的方塊在顯示效果和碰撞上有問題，待修正
-    private void set() {
-        if (position.y < 0)
-            game.gameOver(false);
-        else {
-            game.setBlockOnBoard(this.block, this.position.x, this.position.y);
-            game.getBoss().damage(game.eliminate(), null);
+    /**
+     * 將方塊下移一格，如果不能下移的話就會被固定在面板上
+     *
+     * @return 是否觸底，被固定到面板上
+     */
+    private boolean moveDown(Tetris game) {
+        for (int i = 0; i < blocks.length; i++) {
+            // 觸底檢查
+            if (center.y + blocksPos[i].y + 1 == Tetris.boardHeight) {
+                setOnBoard();
+                return true;
+            }
+            Pane checkBlock = game.getBlockOnBoard(center.x + blocksPos[i].x, center.y + blocksPos[i].y + 1);
+            if (checkBlock != null) {
+                setOnBoard();
+                return true;
+            }
+        }
+        down();
+        return false;
+    }
+
+    /**
+     * 將方塊固定到面板上，固定後會被計算碰撞
+     * 使用於方塊落底
+     */
+    private void setOnBoard() {
+        for (int i = 0; i < blocks.length; i++) {
+            Position newPosition = center.plus(blocksPos[i]);
+            if (newPosition.y < 0) {
+                game.gameOver(false);
+                break;
+            }
+            else {
+                game.setBlockOnBoard(blocks[i], newPosition);
+            }
         }
         dropAnimation.stop();
         animationFinished = true;
+        game.setPaused(false);
     }
-
+    /**
+     * 將方塊直接下移，不做檢查，主要是為簡化多餘程式而寫
+     */
     private void down() {
-        position.y++;
-        GamePane.setRowIndexByCenterY(this.block, position.y);
+        center.y++;
+        for (int i = 0; i < blocks.length; i++) {
+            GamePane.setRowIndexByCenterY(blocks[i], center.y + blocksPos[i].y);
+        }
     }
 
-    public Position getPosition() {
-        return position;
+    /**
+     * 更新方塊的當前位置
+     * <p>
+     * Warring:
+     * 此方法並不會改變 board 的值，因此僅為顯示用途，並不會作為碰撞計算依據
+     * 若需要讓他被碰撞計算，應使用 setOnBoard 方法
+     */
+    public void updateBlockPosition() {
+        for (int i = 0; i < blocks.length; i++) {
+            GamePane.setColumnIndexByCenterX(blocks[i], blocksPos[i].x + center.x);
+            GamePane.setRowIndexByCenterY(blocks[i], blocksPos[i].y + center.y);
+        }
     }
 }

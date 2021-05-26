@@ -7,18 +7,14 @@ import javafx.util.Duration;
 import org.ppodds.core.game.Position;
 import org.ppodds.core.game.SkillBonus;
 import org.ppodds.core.game.Tetris;
-import org.ppodds.core.game.ui.GamePane;
-import org.ppodds.core.game.ui.Logger;
 import org.ppodds.core.util.Random;
-
-import java.util.ArrayList;
 
 public class Boss {
     private final Tetris game;
     /**
      * boss 施放技能的 Timer
      */
-    private final Timeline skillTimer;
+    private int skillCounter = 0;
     private final ProgressBar hpBar;
     private static final String[] skillList = {"直劈", "橫砍", "蓄力"};
     /**
@@ -28,12 +24,6 @@ public class Boss {
     public Boss(Tetris game, ProgressBar bossHPBar) {
         this.game = game;
         hpBar = bossHPBar;
-        skillTimer = new Timeline(new KeyFrame(Duration.seconds(20), (e) -> {
-            if (!game.isPaused())
-                useSkill();
-        }));
-        skillTimer.setCycleCount(Timeline.INDEFINITE);
-        skillTimer.play();
     }
     public void damage(int lines, SkillBonus bonus) {
         if (lines > 0) {
@@ -56,13 +46,12 @@ public class Boss {
                  */
                 game.getLogger().writeSkillMessage("直劈");
                 java.util.Random rand = new java.util.Random();
-                int x1 = rand.nextInt(Tetris.boardWidth - 1);
-                int x2 = x1 + 1;
-                int y = 5;
-                for (int i=0;i<y;i++) {
-                    GarbageBlock block1 = new GarbageBlock(game, new Position(x1, y-i));
-                    GarbageBlock block2 = new GarbageBlock(game, new Position(x2, y-i));
+                int x = rand.nextInt(Tetris.boardWidth - 1);
+                GarbageBlock[] garbageBlocks = new GarbageBlock[2];
+                for (int i=0;i<2;i++) {
+                    garbageBlocks[i] = new GarbageBlock(game, new Position(x+i, 0), 1, 5);
                 }
+                GarbageBlockGroup garbageBlockGroup = new GarbageBlockGroup(game, garbageBlocks);
                 break;
             }
             case "橫砍": {
@@ -72,21 +61,31 @@ public class Boss {
                 game.getLogger().writeSkillMessage("橫砍");
                 java.util.Random rand = new java.util.Random();
                 int x = rand.nextInt(Tetris.boardWidth - 5);
+                GarbageBlock[] garbageBlocks = new GarbageBlock[5];
                 for (int i=0;i<5;i++) {
-                    GarbageBlock block1 = new GarbageBlock(game, new Position(x+i, 0));
-                    GarbageBlock block2 = new GarbageBlock(game, new Position(x+i, 1));
+                    garbageBlocks[i] = new GarbageBlock(game, new Position(x+i, 0), 1, 2);
                 }
+                GarbageBlockGroup garbageBlockGroup = new GarbageBlockGroup(game, garbageBlocks);
                 break;
             }
             case "蓄力": {
-                /**
-                 * 來加快方塊的下落速度好了
+                /*
+                來加快方塊的下落速度好了
                  */
                 game.getLogger().writeSkillMessage("蓄力");
                 game.setBlockDownRate(game.getBlockDownRate() + 1);
                 break;
             }
 
+        }
+    }
+    public void addSkillCounter() {
+        if (!game.isPaused()) {
+            skillCounter++;
+            if (skillCounter == 7) {
+                skillCounter = 0;
+                useSkill();
+            }
         }
     }
 }
