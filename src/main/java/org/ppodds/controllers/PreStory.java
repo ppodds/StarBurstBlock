@@ -18,7 +18,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import org.ppodds.App;
 import org.ppodds.core.ResourceManager;
-import org.ppodds.core.StoryData;
+import org.ppodds.core.game.story.StoryData;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Rectangle?>
+
+
+<AnchorPane minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.Thank">
+   <children>
+      <Label layoutX="131.0" layoutY="113.0" prefHeight="84.0" prefWidth="697.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 70; -fx-alignment: center;" styleClass="bold" stylesheets="@../css/UI.css" text="Congratulations!!" />
+      <Group layoutX="288.0" layoutY="206.0">
+         <children>
+            <Rectangle fill="#f9f9f9" height="16.0" stroke="#f9f9f9" strokeType="INSIDE" strokeWidth="0.0" width="184.0" />
+            <Arc fill="#f9f9f9" layoutX="184.0" layoutY="8.0" length="180.0" radiusX="8.0" radiusY="8.0" startAngle="270.0" stroke="#f9f9f9" strokeType="INSIDE" strokeWidth="0.0" type="ROUND" />
+            <Rectangle fill="#f9f9f9" height="16.0" layoutX="196.0" stroke="#f9f9f9" strokeType="INSIDE" strokeWidth="0.0" width="184.0" />
+            <Arc fill="#f9f9f9" layoutX="198.0" layoutY="8.0" length="180.0" radiusX="8.0" radiusY="8.0" startAngle="90.0" stroke="#f9f9f9" strokeType="INSIDE" strokeWidth="0.0" type="ROUND" />
+         </children>
+      </Group>
+      <Group layoutX="283.0" layoutY="206.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f9f9f9" height="227.0" layoutY="74.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="387.0" />
+            <Group layoutY="137.0">
+               <children>
+                  <Rectangle fill="#d8d8da" height="84.0" stroke="BLACK" strokeLineJoin="BEVEL" strokeWidth="0.0" width="387.0" />
+                  <Rectangle height="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="387.0">
+                     <fill>
+                        <RadialGradient centerX="0.38847581515968066" centerY="0.30634921845935636" radius="0.5">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.7523999810218811" green="0.7523999810218811" blue="0.7599999904632568" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.8470588326454163" green="0.8470588326454163" blue="0.8549019694328308" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Rectangle>
+                  <Rectangle height="16.0" layoutY="64.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="387.0">
+                     <fill>
+                        <RadialGradient centerX="0.5223048114422085" centerY="0.8269841693696521" radius="0.5">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.7523999810218811" green="0.7523999810218811" blue="0.7599999904632568" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.8470588326454163" green="0.8470588326454163" blue="0.8549019694328308" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Rectangle>
+                  <Label layoutX="129.0" layoutY="26.0" style="-fx-font-size: 28; -fx-alignment: center;" styleClass="regular" stylesheets="@../css/UI.css" text="Back To Menu?" />
+               </children>
+            </Group>
+            <Label layoutX="84.0" layoutY="86.0" prefHeight="36.0" prefWidth="210.0" style="-fx-text-fill: #5e5e5e; -fx-font-size: 36; -fx-alignment: center;" styleClass="bold" stylesheets="@../css/UI.css" text="Alert" />
+            <ImageView fx:id="yesButton" fitHeight="50.0" fitWidth="50.0" layoutX="84.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/ui/O.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="noButton" fitHeight="50.0" fitWidth="50.0" layoutX="246.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/ui/X.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+   </children>
+</AnchorPane>

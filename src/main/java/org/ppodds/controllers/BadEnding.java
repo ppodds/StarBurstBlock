@@ -11,14 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.ppodds.App;
 import org.ppodds.core.ResourceManager;
-import org.ppodds.core.StoryData;
+import org.ppodds.core.game.story.StoryData;
 
 import java.net.URL;
 import java.util.ResourceBundle;

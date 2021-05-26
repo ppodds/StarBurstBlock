@@ -2,6 +2,7 @@ package org.ppodds.core;
 
 import javafx.scene.image.Image;
 import org.ppodds.App;
+import org.ppodds.core.game.story.StoryData;
 
 import java.io.InputStream;
 import java.net.URL;

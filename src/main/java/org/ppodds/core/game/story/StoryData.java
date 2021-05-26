@@ -1,7 +1,8 @@
-package org.ppodds.core;
+package org.ppodds.core.game.story;
 
 import javafx.scene.image.Image;
 import javafx.util.Pair;
+import org.ppodds.core.ResourceManager;
 
 import java.util.ArrayList;
 
