@@ -30,6 +30,7 @@ public class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // TODO 加個新手教學形式的介紹
         gameStarted = true;
         gamePane.setOnKeyPressed(event -> {
             if (gameStarted && !game.isPaused()) {

@@ -1,8 +1,11 @@
 package org.ppodds.controllers;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
@@ -19,7 +22,11 @@ public class Start implements Initializable {
     @FXML
     private Button gameStart;
     @FXML
+    private Button help;
+    @FXML
     private MediaView mediaView;
+    @FXML
+    private ImageView background;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -29,6 +36,8 @@ public class Start implements Initializable {
         backgroundMusic.play();
         gameStart.setOnAction(event -> {
             backgroundMusic.stop();
+            gameStart.setVisible(false);
+            help.setVisible(false);
             Media linkstart = new Media(ResourceManager.getMedia("LinkStart.mp4").toString());
             MediaPlayer mediaPlayer = new MediaPlayer(linkstart);
             mediaPlayer.setAutoPlay(true);
@@ -40,6 +49,14 @@ public class Start implements Initializable {
                     mediaPlayer.setStopTime(mediaPlayer.getCurrentTime().add(Duration.millis(200)));
             });
             mediaPlayer.setOnEndOfMedia(() -> App.setRoot("PreStory"));
+        });
+        help.setOnAction((e) -> {
+            backgroundMusic.stop();
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), background.getParent());
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.setOnFinished(event -> App.setRoot("Help"));
+            fadeTransition.play();
         });
     }
 

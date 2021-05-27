@@ -43,7 +43,7 @@
 
 <Pane minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.Start">
     <children>
-        <ImageView fitHeight="560.0" fitWidth="960.0" pickOnBounds="true">
+        <ImageView fx:id="background" fitHeight="560.0" fitWidth="960.0" pickOnBounds="true">
             <image>
                 <Image url="@../image/background/Aincrad.jpg" />
             </image>
@@ -53,7 +53,7 @@
                 <Font size="60.0" />
             </font>
         </Label>
-        <Button fx:id="gameStart" layoutX="365.0" layoutY="389.0" minHeight="78.0" minWidth="195.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="195.0" style="-fx-font-size: 38;" stylesheets="@../css/UI.css" text="Link Start" textAlignment="CENTER">
+        <Button fx:id="gameStart" layoutX="719.0" layoutY="243.0" minHeight="75.0" minWidth="185.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="185.0" style="-fx-font-size: 38;" stylesheets="@../css/UI.css" text="Link Start" textAlignment="CENTER">
             <font>
                 <Font name="SAO UI TT Regular" size="29.0" />
             </font>
@@ -63,5 +63,14 @@
          </styleClass>
         </Button>
         <MediaView fx:id="mediaView" fitHeight="560.0" fitWidth="960.0" preserveRatio="false" visible="false" />
+      <Button fx:id="help" layoutX="719.0" layoutY="361.0" minHeight="75.0" minWidth="185.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="185.0" style="-fx-font-size: 38;" stylesheets="@../css/UI.css" text="Help" textAlignment="CENTER">
+         <font>
+            <Font name="SAO UI TT Regular" size="29.0" />
+         </font>
+         <styleClass>
+            <String fx:value="regular" />
+            <String fx:value="button" />
+         </styleClass>
+      </Button>
     </children>
 </Pane>

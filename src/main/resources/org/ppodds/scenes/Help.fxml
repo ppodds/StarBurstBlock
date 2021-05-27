@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="background" minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.Help">
+   <children>
+      <Label layoutX="42.0" layoutY="36.0" prefHeight="63.0" prefWidth="127.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 40;" styleClass="regular" stylesheets="@../css/UI.css" text="Operation" />
+      <Group layoutX="68.0" layoutY="99.0">
+         <children>
+            <Label prefHeight="63.0" prefWidth="172.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="Tetromino Move" />
+            <Group layoutX="67.0" layoutY="63.0">
+               <children>
+                  <Label prefHeight="63.0" prefWidth="172.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="←     Move Right" />
+                  <Label layoutY="68.0" prefHeight="63.0" prefWidth="172.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="→     Move Left" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group layoutX="68.0" layoutY="293.0">
+         <children>
+            <Label prefHeight="63.0" prefWidth="225.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="Tetromino Operation" />
+            <Group layoutX="67.0" layoutY="63.0">
+               <children>
+                  <Label prefHeight="63.0" prefWidth="320.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="Z        Spin (Counterclockwise)" />
+                  <Label layoutY="68.0" prefHeight="63.0" prefWidth="315.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="X        Spin (Clockwise)" />
+                  <Label layoutY="132.0" prefHeight="63.0" prefWidth="315.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="C        Hold / Release" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group layoutX="455.0" layoutY="36.0">
+         <children>
+            <Label prefHeight="63.0" prefWidth="127.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 40;" styleClass="regular" stylesheets="@../css/UI.css" text="Control" />
+            <Group layoutX="25.0" layoutY="81.0">
+               <children>
+                  <Group layoutY="-14.0">
+                     <children>
+                        <Label prefHeight="63.0" prefWidth="225.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="Skip Video" />
+                        <Group layoutX="67.0" layoutY="63.0">
+                           <children>
+                              <Label prefHeight="63.0" prefWidth="320.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="ESC" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group layoutX="546.0" layoutY="338.0" />
+      <Group layoutX="480.0" layoutY="293.0">
+         <children>
+            <Label prefHeight="63.0" prefWidth="225.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="Skip Story" />
+            <Group layoutX="67.0" layoutY="63.0">
+               <children>
+                  <Label prefHeight="63.0" prefWidth="320.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="Control + Q" />
+                  <Label layoutY="50.0" prefHeight="63.0" prefWidth="320.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 32;" styleClass="regular" stylesheets="@../css/UI.css" text="Mouse Click" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Button fx:id="back" layoutX="750.0" layoutY="470.0" mnemonicParsing="false" style="-fx-font-size: 33;" styleClass="regular" stylesheets="@../css/UI.css" text="Back" />
+   </children>
+</AnchorPane>
