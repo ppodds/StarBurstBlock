@@ -12,6 +12,11 @@
 
 - Modified from screenshot from anime named [Sword Art Online](https://ani.gamer.com.tw/animeVideo.php?sn=926)
 
+## OSU
+
+- Menu - from [魔王魂](https://maou.audio/bgm_fantasy06/)
+- Battle - from [魔王魂](https://maou.audio/bgm_fantasy11/)
+
 ## UI
 
 - Some of them modified from [SAO UI all in one](https://www.deviantart.com/darkblackswords/art/Sword-Art-Online-Vector-Graphics-All-in-one-467548908)

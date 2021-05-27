@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -22,7 +23,12 @@ public class Start implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        AudioClip backgroundMusic = new AudioClip(ResourceManager.getAudio("Menu.mp3").toString());
+        backgroundMusic.setCycleCount(AudioClip.INDEFINITE);
+        backgroundMusic.setVolume(0.8);
+        backgroundMusic.play();
         gameStart.setOnAction(event -> {
+            backgroundMusic.stop();
             Media linkstart = new Media(ResourceManager.getMedia("LinkStart.mp4").toString());
             MediaPlayer mediaPlayer = new MediaPlayer(linkstart);
             mediaPlayer.setAutoPlay(true);

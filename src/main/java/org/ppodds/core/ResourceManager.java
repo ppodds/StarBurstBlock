@@ -23,6 +23,10 @@ public class ResourceManager {
         return getResource("media/" + file);
     }
 
+    public static URL getAudio(String file) {
+        return getResource("audio/" + file);
+    }
+
     public static URL getImage(String type, String file) {
         return getResource("image/" + type + "/" + file);
     }

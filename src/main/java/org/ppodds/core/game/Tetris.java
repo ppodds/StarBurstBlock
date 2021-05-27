@@ -9,6 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import org.ppodds.App;
 import org.ppodds.core.ResourceManager;
@@ -74,6 +75,10 @@ public class Tetris {
      * 紀錄是否暫停
      */
     private boolean paused;
+    /**
+     * 戰鬥背景音樂
+     */
+    private AudioClip backgroundMusic;
 
     public boolean isPaused() {
         return paused;
@@ -111,6 +116,11 @@ public class Tetris {
         }));
         refresh.setCycleCount(Timeline.INDEFINITE);
         refresh.play();
+
+        backgroundMusic = new AudioClip(ResourceManager.getAudio("Battle.mp3").toString());
+        backgroundMusic.setCycleCount(AudioClip.INDEFINITE);
+        backgroundMusic.setVolume(0.3);
+        backgroundMusic.play();
 
         timer = new Timeline(new KeyFrame(Duration.seconds(1), (e) -> {
             counter++;
@@ -296,6 +306,7 @@ public class Tetris {
         paused = true;
         refresh.stop();
         timer.stop();
+        backgroundMusic.stop();
         gamePane.setOnKeyPressed(null);
         if (win) {
             FadeTransition ft = new FadeTransition(Duration.seconds(3), gamePane.getParent().getParent());
