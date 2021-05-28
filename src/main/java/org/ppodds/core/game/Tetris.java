@@ -1,12 +1,10 @@
 package org.ppodds.core.game;
 
-import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
@@ -48,11 +46,6 @@ public class Tetris {
      */
     private final Timeline timer;
     /**
-     * 遊戲結束的計時器
-     */
-    private int counter=0;
-
-    /**
      * 遊戲中被確定下來的方塊紀錄
      * 當計算方塊碰撞時會被檢查
      * x0 x1 x2 ...
@@ -63,6 +56,10 @@ public class Tetris {
      * ...
      */
     private final Pane[][] board = new Pane[20][10];
+    /**
+     * 遊戲結束的計時器
+     */
+    private int counter = 0;
     /**
      * 當前玩家按鍵能控制的 Tetromino
      */
@@ -83,29 +80,6 @@ public class Tetris {
      * 戰鬥背景音樂
      */
     private MediaPlayer backgroundMusic;
-
-    public boolean isPaused() {
-        return paused;
-    }
-
-    public Logger getLogger() {
-        return logger;
-    }
-
-    public void setPaused(boolean paused) {
-        if (this.paused == paused) {
-            return;
-        }
-        if (paused) {
-            refresh.pause();
-            timer.pause();
-        }
-        else {
-            refresh.play();
-            timer.play();
-        }
-        this.paused = paused;
-    }
 
     private Tetris(GridPane gamePane, GridPane hintPane, ProgressBar bossHpBar, TextArea logArea) {
         this.gamePane = gamePane;
@@ -133,20 +107,43 @@ public class Tetris {
                 gameOver(true);
             }
         }));
+        timer.setCycleCount(Timeline.INDEFINITE);
         timer.play();
     }
 
     /**
      * 建立新遊戲
      *
-     * @param gamePane 用來顯示當前遊戲狀態的盤面
-     * @param hintPane 用來顯示提醒的盤面
+     * @param gamePane  用來顯示當前遊戲狀態的盤面
+     * @param hintPane  用來顯示提醒的盤面
      * @param bossHpBar 用來顯示 Boss HP 的 Progress bar
-     * @param logArea 用來顯示戰鬥訊息的盤面
+     * @param logArea   用來顯示戰鬥訊息的盤面
      * @return Tetris 物件，用來管理遊戲
      */
     public static Tetris createNewGame(GridPane gamePane, GridPane hintPane, ProgressBar bossHpBar, TextArea logArea) {
         return new Tetris(gamePane, hintPane, bossHpBar, logArea);
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        if (this.paused == paused) {
+            return;
+        }
+        if (paused) {
+            refresh.pause();
+            timer.pause();
+        } else {
+            refresh.play();
+            timer.play();
+        }
+        this.paused = paused;
+    }
+
+    public Logger getLogger() {
+        return logger;
     }
 
     public Tetromino getControlling() {
@@ -166,10 +163,11 @@ public class Tetris {
     public void setBlockOnBoard(Pane pane, Position position) {
         this.board[position.y][position.x] = pane;
     }
+
     /**
      * 設定盤面上的特定格子為 pane
      *
-     * @param pane     要設定的盤面
+     * @param pane 要設定的盤面
      * @param posX 要設定的位置 x
      * @param posY 要設定的位置 y
      */
@@ -230,9 +228,9 @@ public class Tetris {
 
     /**
      * 消除 board上的方塊，並回傳消掉的行數
-     *
+     * <p>
      * 如果消去成功的話，上面的方塊會往下掉落
-     *
+     * <p>
      * Warring:
      * 此方法會連顯示在遊戲盤面的 Block 一起刪掉
      *
@@ -241,9 +239,9 @@ public class Tetris {
     public int eliminate() {
         int count = 0;
         int[] downStep = new int[boardHeight];
-        for (int y=0;y < boardHeight;y++) {
+        for (int y = 0; y < boardHeight; y++) {
             boolean check = true;
-            for (int x=0;x < boardWidth;x++) {
+            for (int x = 0; x < boardWidth; x++) {
                 if (getBlockOnBoard(x, y) == null) {
                     check = false;
                     break;
@@ -251,22 +249,22 @@ public class Tetris {
             }
             if (check) {
                 count++;
-                for (int i=0;i < y;i++) {
+                for (int i = 0; i < y; i++) {
                     downStep[i]++;
                 }
-                for (int x=0;x < boardWidth;x++) {
+                for (int x = 0; x < boardWidth; x++) {
                     gamePane.getChildren().remove(getBlockOnBoard(x, y));
                     setBlockOnBoard(null, x, y);
                 }
             }
         }
-        for (int y=boardHeight-1;y >= 0;y--) {
-            for (int x=0;x < boardWidth;x++) {
+        for (int y = boardHeight - 1; y >= 0; y--) {
+            for (int x = 0; x < boardWidth; x++) {
                 Pane block = getBlockOnBoard(x, y);
                 if (block != null) {
                     GamePane.setRowIndexByCenterY(block, y + downStep[y]);
                     setBlockOnBoard(null, x, y);
-                    setBlockOnBoard(block, x, y+downStep[y]);
+                    setBlockOnBoard(block, x, y + downStep[y]);
                 }
             }
         }
@@ -304,6 +302,7 @@ public class Tetris {
 
     /**
      * 遊戲結束的控制
+     *
      * @param win 是否勝利
      */
     public void gameOver(boolean win) {
@@ -321,26 +320,28 @@ public class Tetris {
             });
             AudioFadeOut.play(backgroundMusic, Duration.seconds(5));
             ft.play();
-        }
-        else {
+        } else {
             backgroundMusic.stop();
             App.setRoot("BadEnding");
         }
     }
 
     /**
-     * 設定方塊的自然下落速度倍率
-     * @param ratio 倍數 (0 ~ 1)
-     */
-    public void setBlockDownRate(double ratio) {
-        refresh.setRate(ratio);
-    }
-    /**
      * 取得方塊的自然下落速率
+     *
      * @return 方塊的自然下落速率
      */
     public double getBlockDownRate() {
         return refresh.getRate();
+    }
+
+    /**
+     * 設定方塊的自然下落速度倍率
+     *
+     * @param ratio 倍數 (0 ~ 1)
+     */
+    public void setBlockDownRate(double ratio) {
+        refresh.setRate(ratio);
     }
 
 }

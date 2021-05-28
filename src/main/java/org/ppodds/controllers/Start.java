@@ -4,8 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
@@ -16,12 +14,12 @@ import javafx.util.Duration;
 import org.ppodds.App;
 import org.ppodds.core.ResourceManager;
 import org.ppodds.core.Setting;
-import org.ppodds.core.transition.AudioFadeOut;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Start implements Initializable {
+    private static MediaPlayer backgroundMusic;
     @FXML
     private Button gameStart;
     @FXML
@@ -37,8 +35,6 @@ public class Start implements Initializable {
         return backgroundMusic;
     }
 
-    private static MediaPlayer backgroundMusic;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (backgroundMusic == null) {
@@ -46,8 +42,7 @@ public class Start implements Initializable {
             backgroundMusic.setCycleCount(AudioClip.INDEFINITE);
             backgroundMusic.setVolume(Setting.backgoundMusicVolumn);
             backgroundMusic.play();
-        }
-        else if (backgroundMusic.getStatus() == MediaPlayer.Status.STOPPED) {
+        } else if (backgroundMusic.getStatus() == MediaPlayer.Status.STOPPED) {
             backgroundMusic.setVolume(Setting.backgoundMusicVolumn);
             backgroundMusic.play();
         }

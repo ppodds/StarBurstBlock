@@ -1,37 +1,36 @@
 package org.ppodds.core.game.boss;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.control.ProgressBar;
-import javafx.util.Duration;
 import org.ppodds.core.game.Position;
 import org.ppodds.core.game.SkillBonus;
 import org.ppodds.core.game.Tetris;
 import org.ppodds.core.util.Random;
 
 public class Boss {
+    private static final String[] skillList = {"直劈", "橫砍", "蓄力"};
     private final Tetris game;
+    private final ProgressBar hpBar;
     /**
      * boss 施放技能的 Timer
      */
     private int skillCounter = 0;
-    private final ProgressBar hpBar;
-    private static final String[] skillList = {"直劈", "橫砍", "蓄力"};
     private int opSkillCounter = 0;
     /**
      * 紀錄 Boss HP用
      */
     private int bossHP = 2000;
+
     public Boss(Tetris game, ProgressBar bossHPBar) {
         this.game = game;
         hpBar = bossHPBar;
     }
+
     public void damage(int lines, SkillBonus bonus) {
         if (lines > 0) {
             int damage = lines * 10;
             // TODO 之後再根據 bonus 做加成
             bossHP -= damage;
-            hpBar.setProgress(bossHP / 3000f);
+            hpBar.setProgress(bossHP / 2000f);
             game.getLogger().writeDamageMessage(damage);
         }
         if (bossHP < 0) {
@@ -49,8 +48,8 @@ public class Boss {
                 java.util.Random rand = new java.util.Random();
                 int x = rand.nextInt(Tetris.boardWidth - 1);
                 GarbageBlock[] garbageBlocks = new GarbageBlock[2];
-                for (int i=0;i<2;i++) {
-                    garbageBlocks[i] = new GarbageBlock(game, new Position(x+i, 0), 1, 5);
+                for (int i = 0; i < 2; i++) {
+                    garbageBlocks[i] = new GarbageBlock(game, new Position(x + i, 0), 1, 5);
                 }
                 GarbageBlockGroup garbageBlockGroup = new GarbageBlockGroup(game, garbageBlocks);
                 break;
@@ -63,8 +62,8 @@ public class Boss {
                 java.util.Random rand = new java.util.Random();
                 int x = rand.nextInt(Tetris.boardWidth - 5);
                 GarbageBlock[] garbageBlocks = new GarbageBlock[5];
-                for (int i=0;i<5;i++) {
-                    garbageBlocks[i] = new GarbageBlock(game, new Position(x+i, 0), 1, 2);
+                for (int i = 0; i < 5; i++) {
+                    garbageBlocks[i] = new GarbageBlock(game, new Position(x + i, 0), 1, 2);
                 }
                 GarbageBlockGroup garbageBlockGroup = new GarbageBlockGroup(game, garbageBlocks);
                 break;
@@ -78,8 +77,7 @@ public class Boss {
                     game.setBlockDownRate(game.getBlockDownRate() + 1);
                     opSkillCounter++;
                     break;
-                }
-                else {
+                } else {
                     useSkill();
                     break;
                 }
@@ -87,6 +85,7 @@ public class Boss {
 
         }
     }
+
     public void addSkillCounter() {
         if (!game.isPaused()) {
             skillCounter++;

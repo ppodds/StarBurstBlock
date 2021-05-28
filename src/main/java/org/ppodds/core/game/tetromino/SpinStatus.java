@@ -3,6 +3,7 @@ package org.ppodds.core.game.tetromino;
 public class SpinStatus {
     private int step;
     private SpinCheckStatus spinCheckStatus;
+
     public SpinStatus(SpinCheckStatus status, int step) {
         this.spinCheckStatus = status;
         this.step = step;

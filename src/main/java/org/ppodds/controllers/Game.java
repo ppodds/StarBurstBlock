@@ -1,8 +1,6 @@
 package org.ppodds.controllers;
 
 import javafx.animation.FadeTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -13,8 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import org.ppodds.core.game.tetromino.SpinDirection;
 import org.ppodds.core.game.Tetris;
+import org.ppodds.core.game.tetromino.SpinDirection;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -2,18 +2,19 @@ package org.ppodds.core.game.boss;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.ppodds.core.ResourceManager;
 import org.ppodds.core.game.Position;
 import org.ppodds.core.game.Tetris;
-import org.ppodds.core.game.tetromino.TetrominoState;
 import org.ppodds.core.game.ui.GamePane;
-import org.ppodds.core.game.ui.Hint;
-import org.ppodds.core.game.ui.HintPane;
 
 public class GarbageBlock {
+    /**
+     * 用來取得當前遊戲狀態用
+     */
+    private final Tetris game;
+    private final Timeline dropAnimation;
     /**
      * Pane[] 用來存放一整個 Tetromino 裡面有的 4 個 Pane
      * 每個對應的 Pane 對 center 的相對座標會被記錄在 Position[] 對應的index中
@@ -21,27 +22,18 @@ public class GarbageBlock {
     private Pane[] blocks;
     private Position[] blocksPos;
     /**
-     * 用來取得當前遊戲狀態用
-     */
-    private final Tetris game;
-
-    /**
      * 碰撞計算中心位置
      * 一律以最左上角格子做基準
      */
     private Position center;
-    private final Timeline dropAnimation;
     private boolean animationFinished = false;
-
-    public boolean isAnimationFinished() {
-        return animationFinished;
-    }
 
     /**
      * 新建一個 GarbageBlock
-     * @param game Tetris主體物件，用來取得當前遊戲狀態資料
+     *
+     * @param game   Tetris主體物件，用來取得當前遊戲狀態資料
      * @param center GarbageBlock 中心位置
-     * @param width GarbageBlock 寬度
+     * @param width  GarbageBlock 寬度
      * @param height GarbageBlock 高度
      */
     public GarbageBlock(Tetris game, Position center, int width, int height) {
@@ -51,8 +43,8 @@ public class GarbageBlock {
         this.game = game;
         this.center = center;
         int i = 0;
-        for (int x=0;x<width;x++) {
-            for (int y=height-1;y>=0;y--) {
+        for (int x = 0; x < width; x++) {
+            for (int y = height - 1; y >= 0; y--) {
                 blocks[i] = new Pane();
                 blocks[i].getStylesheets().add(ResourceManager.getStyleSheet("Block").toString());
                 blocks[i].getStyleClass().add("block-garbage");
@@ -69,6 +61,11 @@ public class GarbageBlock {
         dropAnimation.setCycleCount(Timeline.INDEFINITE);
         dropAnimation.play();
     }
+
+    public boolean isAnimationFinished() {
+        return animationFinished;
+    }
+
     /**
      * 將方塊下移一格，如果不能下移的話就會被固定在面板上
      *
@@ -101,8 +98,7 @@ public class GarbageBlock {
             if (newPosition.y < 0) {
                 game.gameOver(false);
                 break;
-            }
-            else {
+            } else {
                 game.setBlockOnBoard(blocks[i], newPosition);
             }
         }
@@ -110,6 +106,7 @@ public class GarbageBlock {
         animationFinished = true;
         game.setPaused(false);
     }
+
     /**
      * 將方塊直接下移，不做檢查，主要是為簡化多餘程式而寫
      */

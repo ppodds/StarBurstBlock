@@ -6,9 +6,10 @@ import javafx.util.Duration;
 import org.ppodds.core.game.Tetris;
 
 public class GarbageBlockGroup {
-    private GarbageBlock[] garbageBlocks;
     private final Tetris game;
     private final Timeline checkEliminate;
+    private GarbageBlock[] garbageBlocks;
+
     public GarbageBlockGroup(Tetris game, GarbageBlock[] garbageBlocks) {
         this.game = game;
         this.garbageBlocks = garbageBlocks;
@@ -16,10 +17,11 @@ public class GarbageBlockGroup {
             checkEliminate();
         }));
     }
+
     private void checkEliminate() {
         boolean check = true;
-        for (int i=0;i < garbageBlocks.length;i++) {
-            if(!garbageBlocks[i].isAnimationFinished()) {
+        for (int i = 0; i < garbageBlocks.length; i++) {
+            if (!garbageBlocks[i].isAnimationFinished()) {
                 check = false;
                 break;
             }

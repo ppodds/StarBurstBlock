@@ -5,12 +5,15 @@ import org.ppodds.core.util.Random;
 
 public class Logger {
     private TextArea logArea;
+
     public Logger(TextArea logArea) {
         this.logArea = logArea;
     }
+
     private void writeLine(String message) {
         logArea.appendText(message + "\n");
     }
+
     public void writeDamageMessage(int damage) {
         Random random = new Random();
         String[] people = {"亞絲娜", "克萊茵"};
@@ -19,20 +22,20 @@ public class Logger {
                 writeLine("亞絲娜使用了星屑飛濺，對閃耀魔眼造成了 " + damage + " 點傷害!");
             else
                 writeLine("克萊茵使用了辻風，對閃耀魔眼造成了 " + damage + " 點傷害!");
-        }
-        else if (damage >= 20) {
+        } else if (damage >= 20) {
             if (Random.choose(people).equals("亞絲娜"))
                 writeLine("亞絲娜使用了平行刺擊，對閃耀魔眼造成了 " + damage + " 點傷害!");
             else
                 writeLine("克萊茵使用了緋扇，對閃耀魔眼造成了 " + damage + " 點傷害!");
-        }
-        else {
+        } else {
             writeLine(Random.choose(people) + "對閃耀魔眼進行攻擊，造成了 " + damage + " 點傷害!");
         }
     }
+
     public void writeLossMessage() {
         writeLine("閃耀魔眼擊殺了桐人!");
     }
+
     public void writeSkillMessage(String skillName) {
         switch (skillName) {
             case "直劈":
@@ -46,14 +49,13 @@ public class Logger {
                 break;
         }
     }
+
     public void writeGaveOverProgress(int counter) {
         if (counter == 30) {
             writeLine("桐人似乎是在準備什麼的樣子...");
-        }
-        else if (counter == 120) {
+        } else if (counter == 120) {
             writeLine("桐人看起來快準備好了!");
-        }
-        else if (counter == 180) {
+        } else if (counter == 180) {
             writeLine("桐人： 好，可以了。");
             writeLine("桐人： 切換!");
         }

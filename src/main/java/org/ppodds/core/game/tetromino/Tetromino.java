@@ -15,7 +15,15 @@ import java.util.Arrays;
 
 
 public abstract class Tetromino {
-
+    private static int test = 0;
+    /**
+     * 用來記錄已經隨機產生的 Tetromino pack 順序
+     */
+    private static ArrayList<Character> pack;
+    /**
+     * 用來記錄現在產生到第幾個 Tetromino
+     */
+    private static int packIndex = 7;
     /**
      * Pane[] 用來存放一整個 Tetromino 裡面有的 4 個 Pane
      * 每個對應的 Pane 對 center 的相對座標會被記錄在 Position[] 對應的index中
@@ -30,7 +38,6 @@ public abstract class Tetromino {
      * 用來取得當前遊戲狀態用
      */
     protected Tetris game;
-
     /**
      * 碰撞計算中心位置
      * 若碰撞計算中心位於格線上，則以其左上角格子做基準
@@ -48,15 +55,6 @@ public abstract class Tetromino {
      * 用來記錄是否已被 hold 過
      */
     protected boolean hasHold = false;
-
-    /**
-     * 用來記錄已經隨機產生的 Tetromino pack 順序
-     */
-    private static ArrayList<Character> pack;
-    /**
-     * 用來記錄現在產生到第幾個 Tetromino
-     */
-    private static int packIndex = 7;
 
     /**
      * 建立新方塊用
@@ -281,17 +279,18 @@ public abstract class Tetromino {
 
     /**
      * 用來依據 spinCheck 的結果對 Position[] 做對應的修改
-     * @param blocksPos 要修改的 Position[]
+     *
+     * @param blocksPos       要修改的 Position[]
      * @param spinCheckResult 對應的 spinCheckResult
      */
     protected void toLeftOrRight(Position[] blocksPos, SpinStatus spinCheckResult) {
         switch (spinCheckResult.getSpinCheckStatus()) {
             case TORIGHT:
-                for (int i=0;i<4;i++)
+                for (int i = 0; i < 4; i++)
                     blocksPos[i] = new Position(blocksPos[i].x + spinCheckResult.getStep(), blocksPos[i].y);
                 break;
             case TOLEFT:
-                for (int i=0;i<4;i++)
+                for (int i = 0; i < 4; i++)
                     blocksPos[i] = new Position(blocksPos[i].x - spinCheckResult.getStep(), blocksPos[i].y);
                 break;
         }
@@ -330,7 +329,7 @@ public abstract class Tetromino {
      * 用於 spin 時的檢查
      *
      * @param newBlocksPos 旋轉過後新的 Block 相對位置
-     * @param kickTimes 踢過牆的次數，若尚未踢過就從0開始
+     * @param kickTimes    踢過牆的次數，若尚未踢過就從0開始
      * @return 旋轉的狀態，可得知旋轉若是要踢牆要移動幾格或是方向資訊
      */
     protected SpinStatus spinCheck(Position[] newBlocksPos, int kickTimes) {
@@ -344,25 +343,23 @@ public abstract class Tetromino {
                     Position[] testBlocksPos = new Position[4];
                     // 測試右移
                     if (newPosition.x <= 0) {
-                        for (int j=0;j<4;j++) {
-                            testBlocksPos[j] = new Position(newBlocksPos[j].x+1, newBlocksPos[j].y);
+                        for (int j = 0; j < 4; j++) {
+                            testBlocksPos[j] = new Position(newBlocksPos[j].x + 1, newBlocksPos[j].y);
                         }
-                        SpinStatus check = spinCheck(testBlocksPos, kickTimes+1);
+                        SpinStatus check = spinCheck(testBlocksPos, kickTimes + 1);
                         if (check.getSpinCheckStatus() == SpinCheckStatus.SUCCESS) {
                             return new SpinStatus(SpinCheckStatus.TORIGHT, check.getStep());
-                        }
-                        else
+                        } else
                             return new SpinStatus(SpinCheckStatus.FAIL);
                     } // 測試左移
                     else if (newPosition.x >= Tetris.boardWidth) {
-                        for (int j=0;j<4;j++) {
-                            testBlocksPos[j] = new Position(newBlocksPos[j].x-1, newBlocksPos[j].y);
+                        for (int j = 0; j < 4; j++) {
+                            testBlocksPos[j] = new Position(newBlocksPos[j].x - 1, newBlocksPos[j].y);
                         }
-                        SpinStatus check = spinCheck(testBlocksPos, kickTimes+1);
+                        SpinStatus check = spinCheck(testBlocksPos, kickTimes + 1);
                         if (check.getSpinCheckStatus() == SpinCheckStatus.SUCCESS) {
                             return new SpinStatus(SpinCheckStatus.TOLEFT, check.getStep());
-                        }
-                        else
+                        } else
                             return new SpinStatus(SpinCheckStatus.FAIL);
                     }
                     return new SpinStatus(SpinCheckStatus.FAIL);
@@ -384,14 +381,14 @@ public abstract class Tetromino {
             if (newPosition.y < 0) {
                 game.gameOver(false);
                 break;
-            }
-            else
+            } else
                 game.setBlockOnBoard(blocks[i], newPosition);
         }
         game.resetControlling();
         game.getBoss().addSkillCounter();
         game.getBoss().damage(game.eliminate(), null);
     }
+
     /**
      * 依照旋轉的方向改變 Tetromino 的狀態
      *

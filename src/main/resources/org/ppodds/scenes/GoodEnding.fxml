@@ -37,14 +37,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.media.MediaView?>
-
-<Pane fx:id="handler" minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.GoodEnding">
+<Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="handler" minHeight="560.0" minWidth="960.0" prefHeight="560.0"
+      prefWidth="960.0" xmlns="http://javafx.com/javafx/16"
+      fx:controller="org.ppodds.controllers.GoodEnding">
     <children>
         <ImageView fx:id="storyImage" fitHeight="560.0" fitWidth="960.0" pickOnBounds="true" visible="false">
-         <image>
-            <Image url="@../image/story/Black.jpg" />
-         </image></ImageView>
-      <Label fx:id="storyText" layoutY="465.0" minHeight="68.0" minWidth="960.0" prefHeight="68.0" prefWidth="960.0" styleClass="story-text" stylesheets="@../css/Story.css" visible="false" />
-        <MediaView fx:id="mediaView" fitHeight="560.0" fitWidth="960.0" focusTraversable="true" preserveRatio="false" />
+            <image>
+                <Image url="@../image/story/Black.jpg"/>
+            </image>
+        </ImageView>
+        <Label fx:id="storyText" layoutY="465.0" minHeight="68.0" minWidth="960.0" prefHeight="68.0" prefWidth="960.0"
+               styleClass="story-text" stylesheets="@../css/Story.css" visible="false"/>
+        <MediaView fx:id="mediaView" fitHeight="560.0" fitWidth="960.0" focusTraversable="true" preserveRatio="false"/>
     </children>
 </Pane>
