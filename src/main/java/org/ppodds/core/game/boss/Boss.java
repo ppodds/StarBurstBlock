@@ -17,10 +17,11 @@ public class Boss {
     private int skillCounter = 0;
     private final ProgressBar hpBar;
     private static final String[] skillList = {"直劈", "橫砍", "蓄力"};
+    private int opSkillCounter = 0;
     /**
      * 紀錄 Boss HP用
      */
-    private int bossHP = 3000;
+    private int bossHP = 2000;
     public Boss(Tetris game, ProgressBar bossHPBar) {
         this.game = game;
         hpBar = bossHPBar;
@@ -72,9 +73,16 @@ public class Boss {
                 /*
                 來加快方塊的下落速度好了
                  */
-                game.getLogger().writeSkillMessage("蓄力");
-                game.setBlockDownRate(game.getBlockDownRate() + 1);
-                break;
+                if (opSkillCounter < 3) {
+                    game.getLogger().writeSkillMessage("蓄力");
+                    game.setBlockDownRate(game.getBlockDownRate() + 1);
+                    opSkillCounter++;
+                    break;
+                }
+                else {
+                    useSkill();
+                    break;
+                }
             }
 
         }

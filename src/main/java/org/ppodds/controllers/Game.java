@@ -1,6 +1,8 @@
 package org.ppodds.controllers;
 
 import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -97,5 +99,9 @@ public class Game implements Initializable {
             });
         });
         fadeTransition.play();
+        // 避免失去focus
+        gamePane.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            gamePane.requestFocus();
+        });
     }
 }

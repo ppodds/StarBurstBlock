@@ -47,6 +47,10 @@ public class Start implements Initializable {
             backgroundMusic.setVolume(Setting.backgoundMusicVolumn);
             backgroundMusic.play();
         }
+        else if (backgroundMusic.getStatus() == MediaPlayer.Status.STOPPED) {
+            backgroundMusic.setVolume(Setting.backgoundMusicVolumn);
+            backgroundMusic.play();
+        }
         gameStart.setOnAction(event -> {
             backgroundMusic.stop();
             gameStart.setVisible(false);

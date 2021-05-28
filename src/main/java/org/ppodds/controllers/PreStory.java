@@ -76,6 +76,7 @@ public class PreStory implements Initializable, EventHandler<MouseEvent> {
                 Pair<Image, String> data = story.getNext();
                 storyImage.setImage(data.getKey());
                 storyText.setText(data.getValue());
+                System.out.println(data.getValue());
                 FadeTransition ft = new FadeTransition(Duration.seconds(fadeDuration), storyImage);
                 ft.setFromValue(0);
                 ft.setToValue(1);

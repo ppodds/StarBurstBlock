@@ -19,7 +19,7 @@ public class BlockO extends Tetromino {
     @Override
     public SpinStatus spin(SpinDirection direction) {
         changeState(direction);
-        return SpinStatus.SUCCESS;
+        return new SpinStatus(SpinCheckStatus.SUCCESS);
     }
 
 }

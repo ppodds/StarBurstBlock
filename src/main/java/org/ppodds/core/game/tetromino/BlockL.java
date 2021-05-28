@@ -77,14 +77,14 @@ public class BlockL extends Tetromino {
                 }
                 break;
         }
-        SpinStatus spinCheckResult = spinCheck(newBlocksPos, false);
-        if (spinCheckResult == SpinStatus.FAIL)
+        SpinStatus spinCheckResult = spinCheck(newBlocksPos, 0);
+        if (spinCheckResult.getSpinCheckStatus() == SpinCheckStatus.FAIL)
             return spinCheckResult;
         toLeftOrRight(newBlocksPos, spinCheckResult);
         System.arraycopy(newBlocksPos, 0, blocksPos, 0, 4);
         updateBlockPosition();
         changeState(direction);
-        return SpinStatus.SUCCESS;
+        return spinCheckResult;
     }
 
 }

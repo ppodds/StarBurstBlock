@@ -142,7 +142,7 @@ public abstract class Tetromino {
      * 結束時需 call updateBlockPosition 以在顯示盤面反映變化
      *
      * @param direction 旋轉的方向
-     * @return 是否撞牆
+     * @return 旋轉的狀態，可得知旋轉若是要踢牆要移動幾格或是方向資訊
      */
     public abstract SpinStatus spin(SpinDirection direction); // TODO T Spin 的規則 ( 有空再弄，或是等人發 PR
 
@@ -285,14 +285,14 @@ public abstract class Tetromino {
      * @param spinCheckResult 對應的 spinCheckResult
      */
     protected void toLeftOrRight(Position[] blocksPos, SpinStatus spinCheckResult) {
-        switch (spinCheckResult) {
+        switch (spinCheckResult.getSpinCheckStatus()) {
             case TORIGHT:
                 for (int i=0;i<4;i++)
-                    blocksPos[i] = new Position(blocksPos[i].x + 1, blocksPos[i].y);
+                    blocksPos[i] = new Position(blocksPos[i].x + spinCheckResult.getStep(), blocksPos[i].y);
                 break;
             case TOLEFT:
                 for (int i=0;i<4;i++)
-                    blocksPos[i] = new Position(blocksPos[i].x - 1, blocksPos[i].y);
+                    blocksPos[i] = new Position(blocksPos[i].x - spinCheckResult.getStep(), blocksPos[i].y);
                 break;
         }
     }
@@ -330,46 +330,48 @@ public abstract class Tetromino {
      * 用於 spin 時的檢查
      *
      * @param newBlocksPos 旋轉過後新的 Block 相對位置
-     * @param hasKicked 是否已經踢過牆
-     * @return 是否會產生碰撞或超出邊界
+     * @param kickTimes 踢過牆的次數，若尚未踢過就從0開始
+     * @return 旋轉的狀態，可得知旋轉若是要踢牆要移動幾格或是方向資訊
      */
-    protected SpinStatus spinCheck(Position[] newBlocksPos, boolean hasKicked) {
+    protected SpinStatus spinCheck(Position[] newBlocksPos, int kickTimes) {
         for (int i = 0; i < 4; i++) {
             Position newPosition = center.plus(newBlocksPos[i]);
             // 邊界檢查
-            if (newPosition.y < 0 || newPosition.y == Tetris.boardHeight || newPosition.x == Tetris.boardWidth || newPosition.x < 0) {
-                if (hasKicked)
-                    return SpinStatus.FAIL;
+            if (newPosition.y < 0 || newPosition.y >= Tetris.boardHeight || newPosition.x >= Tetris.boardWidth || newPosition.x < 0) {
+                if (kickTimes == 2)
+                    return new SpinStatus(SpinCheckStatus.FAIL);
                 else {
                     Position[] testBlocksPos = new Position[4];
                     // 測試右移
-                    if (newPosition.x == 0) {
+                    if (newPosition.x <= 0) {
                         for (int j=0;j<4;j++) {
                             testBlocksPos[j] = new Position(newBlocksPos[j].x+1, newBlocksPos[j].y);
                         }
-                        if (spinCheck(testBlocksPos, true) == SpinStatus.SUCCESS) {
-                            return SpinStatus.TORIGHT;
+                        SpinStatus check = spinCheck(testBlocksPos, kickTimes+1);
+                        if (check.getSpinCheckStatus() == SpinCheckStatus.SUCCESS) {
+                            return new SpinStatus(SpinCheckStatus.TORIGHT, check.getStep());
                         }
                         else
-                            return SpinStatus.FAIL;
+                            return new SpinStatus(SpinCheckStatus.FAIL);
                     } // 測試左移
-                    else if (newPosition.x == Tetris.boardWidth) {
+                    else if (newPosition.x >= Tetris.boardWidth) {
                         for (int j=0;j<4;j++) {
                             testBlocksPos[j] = new Position(newBlocksPos[j].x-1, newBlocksPos[j].y);
                         }
-                        if (spinCheck(testBlocksPos, true) == SpinStatus.SUCCESS) {
-                            return SpinStatus.TOLEFT;
+                        SpinStatus check = spinCheck(testBlocksPos, kickTimes+1);
+                        if (check.getSpinCheckStatus() == SpinCheckStatus.SUCCESS) {
+                            return new SpinStatus(SpinCheckStatus.TOLEFT, check.getStep());
                         }
                         else
-                            return SpinStatus.FAIL;
+                            return new SpinStatus(SpinCheckStatus.FAIL);
                     }
-                    return SpinStatus.FAIL;
+                    return new SpinStatus(SpinCheckStatus.FAIL);
                 }
             }
             if (game.getBlockOnBoard(newPosition) != null)
-                return SpinStatus.FAIL;
+                return new SpinStatus(SpinCheckStatus.FAIL);
         }
-        return SpinStatus.SUCCESS;
+        return new SpinStatus(SpinCheckStatus.SUCCESS, kickTimes);
     }
 
     /**
