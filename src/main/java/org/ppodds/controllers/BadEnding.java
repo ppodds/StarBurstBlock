@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.ppodds.App;
@@ -40,6 +41,9 @@ public class BadEnding implements Initializable, EventHandler<MouseEvent> {
             storyImage.setImage(ResourceManager.getPlainImage("Black"));
             storyText.setVisible(true);
             nextStep(1);
+            AudioClip die = new AudioClip(ResourceManager.getAudio("Die.mp3").toString());
+            die.setVolume(1.5);
+            die.play();
         });
         ft.play();
         storyImage.setOnKeyPressed(e -> {

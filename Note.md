@@ -34,3 +34,7 @@
 
    由於新版JavaFX拿掉打包用的組件，只能靠maven的shade插件把library一起包進去了...
    之前自己試著不用maven來打包也是失敗
+   
+4. AudioClip
+
+   AudioClip更改音量以後不會自動反應到正在撥放的音訊，不過改成MediaPlayer就可以解決這個問題。

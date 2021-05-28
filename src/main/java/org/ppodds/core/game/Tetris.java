@@ -10,9 +10,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import org.ppodds.App;
 import org.ppodds.core.ResourceManager;
+import org.ppodds.core.Setting;
 import org.ppodds.core.game.boss.Boss;
 import org.ppodds.core.game.tetromino.Tetromino;
 import org.ppodds.core.game.ui.GamePane;
@@ -78,7 +81,7 @@ public class Tetris {
     /**
      * 戰鬥背景音樂
      */
-    private AudioClip backgroundMusic;
+    private MediaPlayer backgroundMusic;
 
     public boolean isPaused() {
         return paused;
@@ -117,9 +120,9 @@ public class Tetris {
         refresh.setCycleCount(Timeline.INDEFINITE);
         refresh.play();
 
-        backgroundMusic = new AudioClip(ResourceManager.getAudio("Battle.mp3").toString());
+        backgroundMusic = new MediaPlayer(new Media(ResourceManager.getAudio("Battle.mp3").toString()));
         backgroundMusic.setCycleCount(AudioClip.INDEFINITE);
-        backgroundMusic.setVolume(0.3);
+        backgroundMusic.setVolume(Setting.backgoundMusicVolumn);
         backgroundMusic.play();
 
         timer = new Timeline(new KeyFrame(Duration.seconds(1), (e) -> {
@@ -306,19 +309,29 @@ public class Tetris {
         paused = true;
         refresh.stop();
         timer.stop();
-        backgroundMusic.stop();
         gamePane.setOnKeyPressed(null);
         if (win) {
             FadeTransition ft = new FadeTransition(Duration.seconds(3), gamePane.getParent().getParent());
             ft.setFromValue(1);
             ft.setToValue(0);
-            ft.setDelay(Duration.seconds(3));
+            ft.setDelay(Duration.seconds(2));
             ft.setOnFinished(e -> {
                 App.setRoot("GoodEnding");
             });
+            // TODO volumn 好像沒辦法及時反應到 Audioclip 上
+            float downRate = Setting.backgoundMusicVolumn/(5000/50);
+            Timeline musicFadeOut = new Timeline(new KeyFrame(Duration.millis(50), e -> {
+                backgroundMusic.setVolume(backgroundMusic.getVolume() - downRate);
+            }));
+            musicFadeOut.setCycleCount(5000/50);
+            musicFadeOut.setOnFinished(e -> backgroundMusic.stop());
+            musicFadeOut.play();
+//            backgroundMusic.stop();
             ft.play();
+
         }
         else {
+            backgroundMusic.stop();
             App.setRoot("BadEnding");
         }
     }

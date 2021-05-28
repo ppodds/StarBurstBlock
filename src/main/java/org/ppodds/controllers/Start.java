@@ -32,7 +32,7 @@ public class Start implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AudioClip backgroundMusic = new AudioClip(ResourceManager.getAudio("Menu.mp3").toString());
         backgroundMusic.setCycleCount(AudioClip.INDEFINITE);
-        backgroundMusic.setVolume(0.8);
+        backgroundMusic.setVolume(0.3);
         backgroundMusic.play();
         gameStart.setOnAction(event -> {
             backgroundMusic.stop();
