@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="background" minHeight="560.0" minWidth="960.0" prefHeight="560.0"
-            prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16"
-            fx:controller="org.ppodds.controllers.Options">
+
+<AnchorPane fx:id="background" minHeight="560.0" minWidth="960.0" prefHeight="560.0" prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ppodds.controllers.Options">
     <children>
-        <Label layoutX="53.0" layoutY="41.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 40;" styleClass="regular"
-               stylesheets="@../css/UI.css" text="Volumn Setting"/>
+        <Label layoutX="53.0" layoutY="41.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 40;" styleClass="regular" stylesheets="@../css/UI.css" text="Volumn Setting" />
         <Group layoutX="119.0" layoutY="125.0">
             <children>
-                <Label style="-fx-text-fill: #F9F9F9; -fx-font-size: 35;" styleClass="regular"
-                       stylesheets="@../css/UI.css" text="BGM Volumn"/>
+                <Label style="-fx-text-fill: #F9F9F9; -fx-font-size: 35;" styleClass="regular" stylesheets="@../css/UI.css" text="BGM Volumn" />
                 <Group layoutX="50.33333206176758" layoutY="54.0">
                     <children>
-                        <Slider fx:id="bgmVolumnSlider" layoutX="2.666667938232422" layoutY="3.0" minHeight="30.0"
-                                minWidth="200.0" prefHeight="30.0" prefWidth="200.0" value="30.0"/>
-                        <Label fx:id="bgmVolumnLabel" layoutX="214.66666793823242" minHeight="30.0" minWidth="51.0"
-                               prefHeight="36.0" prefWidth="51.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 30;"
-                               styleClass="regular" stylesheets="@../css/UI.css" text="30"/>
+                        <Slider fx:id="bgmVolumnSlider" layoutX="2.666667938232422" layoutY="3.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" value="30.0" />
+                        <Label fx:id="bgmVolumnLabel" layoutX="214.66666793823242" minHeight="30.0" minWidth="51.0" prefHeight="36.0" prefWidth="51.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 30;" styleClass="regular" stylesheets="@../css/UI.css" text="30" />
                     </children>
                 </Group>
             </children>
         </Group>
         <Group layoutX="119.0" layoutY="258.0">
             <children>
-                <Label style="-fx-text-fill: #F9F9F9; -fx-font-size: 35;" styleClass="regular"
-                       stylesheets="@../css/UI.css" text="SE Volumn"/>
+                <Label style="-fx-text-fill: #F9F9F9; -fx-font-size: 35;" styleClass="regular" stylesheets="@../css/UI.css" text="SE Volumn" />
                 <Group layoutX="50.33333206176758" layoutY="54.0">
                     <children>
-                        <Slider fx:id="seVolumnSlider" layoutX="2.666667938232422" layoutY="3.0" minHeight="30.0"
-                                minWidth="200.0" prefHeight="30.0" prefWidth="200.0" value="100.0"/>
-                        <Label fx:id="seVolumnLabel" layoutX="211.66666793823242" minHeight="30.0" minWidth="51.0"
-                               prefHeight="36.0" prefWidth="51.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 30;"
-                               styleClass="regular" stylesheets="@../css/UI.css" text="100"/>
+                        <Slider fx:id="seVolumnSlider" layoutX="2.666667938232422" layoutY="3.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" value="100.0" />
+                        <Label fx:id="seVolumnLabel" layoutX="211.66666793823242" minHeight="30.0" minWidth="51.0" prefHeight="36.0" prefWidth="51.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 30;" styleClass="regular" stylesheets="@../css/UI.css" text="100" />
                     </children>
                 </Group>
             </children>
         </Group>
-        <Button fx:id="back" layoutX="750.0" layoutY="470.0" mnemonicParsing="false" style="-fx-font-size: 33;"
-                styleClass="regular" stylesheets="@../css/UI.css" text="Back"/>
+      <Group layoutX="119.0" layoutY="380.0">
+         <children>
+            <Label style="-fx-text-fill: #F9F9F9; -fx-font-size: 35;" styleClass="regular" stylesheets="@../css/UI.css" text="Media Volumn" />
+            <Group layoutX="50.33333206176758" layoutY="54.0">
+               <children>
+                  <Slider fx:id="mediaVolumnSlider" layoutX="2.666667938232422" layoutY="3.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" value="100.0" />
+                  <Label fx:id="mediaVolumnLabel" layoutX="211.66666793823242" minHeight="30.0" minWidth="51.0" prefHeight="36.0" prefWidth="51.0" style="-fx-text-fill: #F9F9F9; -fx-font-size: 30;" styleClass="regular" stylesheets="@../css/UI.css" text="100" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+        <Button fx:id="back" layoutX="750.0" layoutY="470.0" mnemonicParsing="false" style="-fx-font-size: 33;" styleClass="regular" stylesheets="@../css/UI.css" text="Back" />
     </children>
 </AnchorPane>

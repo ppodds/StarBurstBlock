@@ -18,6 +18,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import org.ppodds.App;
 import org.ppodds.core.ResourceManager;
+import org.ppodds.core.Setting;
 import org.ppodds.core.game.story.StoryData;
 
 import java.net.URL;
@@ -76,7 +77,6 @@ public class PreStory implements Initializable, EventHandler<MouseEvent> {
                 Pair<Image, String> data = story.getNext();
                 storyImage.setImage(data.getKey());
                 storyText.setText(data.getValue());
-                System.out.println(data.getValue());
                 FadeTransition ft = new FadeTransition(Duration.seconds(fadeDuration), storyImage);
                 ft.setFromValue(0);
                 ft.setToValue(1);
@@ -87,6 +87,7 @@ public class PreStory implements Initializable, EventHandler<MouseEvent> {
             Media preStory = new Media(ResourceManager.getMedia("PreStory.mp4").toString());
             MediaPlayer mediaPlayer = new MediaPlayer(preStory);
             mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setVolume(Setting.mediaVolumn);
             mediaView.setMediaPlayer(mediaPlayer);
             mediaView.setVisible(true);
             mediaView.requestFocus();

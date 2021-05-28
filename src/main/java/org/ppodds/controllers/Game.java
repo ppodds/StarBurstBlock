@@ -10,7 +10,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
+import org.ppodds.core.ResourceManager;
+import org.ppodds.core.Setting;
 import org.ppodds.core.game.Tetris;
 import org.ppodds.core.game.tetromino.SpinDirection;
 
@@ -34,6 +37,8 @@ public class Game implements Initializable {
     private Group alert;
     @FXML
     private ImageView yesButton;
+    @FXML
+    private ImageView noButton;
 
     private Tetris game;
     private boolean gameStarted = false;
@@ -45,7 +50,11 @@ public class Game implements Initializable {
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(1);
         fadeTransition.setOnFinished(event -> {
+            noButton.setOnMouseEntered(e -> playSE("Switch.mp3"));
+            noButton.setOnMouseClicked(e -> playSE("Confirm.mp3"));
+            yesButton.setOnMouseEntered(e -> playSE("Switch.mp3"));
             yesButton.setOnMouseClicked((e) -> {
+                playSE("Confirm.mp3");
                 gameStarted = true;
                 mainPane.setOpacity(1);
                 alert.setVisible(false);
@@ -101,5 +110,11 @@ public class Game implements Initializable {
         gamePane.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
             gamePane.requestFocus();
         });
+    }
+
+    private void playSE(String s) {
+        AudioClip se = new AudioClip(ResourceManager.getAudio(s).toString());
+        se.setVolume(Setting.soundEffectVolumn);
+        se.play();
     }
 }

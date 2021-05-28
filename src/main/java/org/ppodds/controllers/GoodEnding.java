@@ -15,6 +15,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import org.ppodds.App;
 import org.ppodds.core.ResourceManager;
+import org.ppodds.core.Setting;
 import org.ppodds.core.game.story.StoryData;
 
 import java.net.URL;
@@ -36,6 +37,7 @@ public class GoodEnding implements Initializable {
         Media ending = new Media(ResourceManager.getMedia("GoodEnding.mp4").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(ending);
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setVolume(Setting.mediaVolumn);
         mediaView.setMediaPlayer(mediaPlayer);
         Platform.runLater(() -> handler.requestFocus());
         handler.setOnKeyPressed(e -> {

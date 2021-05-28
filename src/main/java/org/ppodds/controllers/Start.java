@@ -46,13 +46,18 @@ public class Start implements Initializable {
             backgroundMusic.setVolume(Setting.backgoundMusicVolumn);
             backgroundMusic.play();
         }
+        gameStart.setOnMouseEntered(e -> playSE("Switch.mp3"));
+        help.setOnMouseEntered(e -> playSE("Switch.mp3"));
+        options.setOnMouseEntered(e -> playSE("Switch.mp3"));
         gameStart.setOnAction(event -> {
+            playSE("Confirm.mp3");
             backgroundMusic.stop();
             gameStart.setVisible(false);
             help.setVisible(false);
             options.setVisible(false);
             Media linkstart = new Media(ResourceManager.getMedia("LinkStart.mp4").toString());
             MediaPlayer mediaPlayer = new MediaPlayer(linkstart);
+            mediaPlayer.setVolume(Setting.mediaVolumn);
             mediaPlayer.setAutoPlay(true);
             mediaView.setMediaPlayer(mediaPlayer);
             mediaView.setVisible(true);
@@ -64,7 +69,7 @@ public class Start implements Initializable {
             mediaPlayer.setOnEndOfMedia(() -> App.setRoot("PreStory"));
         });
         help.setOnAction((e) -> {
-//            AudioFadeOut.play(backgroundMusic, Duration.seconds(2));
+            playSE("Confirm.mp3");
             FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), mainPane);
             fadeTransition.setFromValue(1);
             fadeTransition.setToValue(0);
@@ -72,13 +77,19 @@ public class Start implements Initializable {
             fadeTransition.play();
         });
         options.setOnAction((e) -> {
-//            AudioFadeOut.play(backgroundMusic, Duration.seconds(2));
+            playSE("Confirm.mp3");
             FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), mainPane);
             fadeTransition.setFromValue(1);
             fadeTransition.setToValue(0);
             fadeTransition.setOnFinished(event -> App.setRoot("Options"));
             fadeTransition.play();
         });
+    }
+
+    private void playSE(String s) {
+        AudioClip se = new AudioClip(ResourceManager.getAudio(s).toString());
+        se.setVolume(Setting.soundEffectVolumn);
+        se.play();
     }
 
 }
