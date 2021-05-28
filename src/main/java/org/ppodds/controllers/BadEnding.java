@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import org.ppodds.App;
 import org.ppodds.core.ResourceManager;
+import org.ppodds.core.Setting;
 import org.ppodds.core.game.story.StoryData;
 
 import java.net.URL;
@@ -42,7 +43,7 @@ public class BadEnding implements Initializable, EventHandler<MouseEvent> {
             storyText.setVisible(true);
             nextStep(1);
             AudioClip die = new AudioClip(ResourceManager.getAudio("Die.mp3").toString());
-            die.setVolume(1.5);
+            die.setVolume(Setting.soundEffectVolumn);
             die.play();
         });
         ft.play();

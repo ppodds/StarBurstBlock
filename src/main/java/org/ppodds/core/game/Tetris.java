@@ -20,6 +20,7 @@ import org.ppodds.core.game.boss.Boss;
 import org.ppodds.core.game.tetromino.Tetromino;
 import org.ppodds.core.game.ui.GamePane;
 import org.ppodds.core.game.ui.Logger;
+import org.ppodds.core.transition.AudioFadeOut;
 
 public class Tetris {
     /**
@@ -318,17 +319,8 @@ public class Tetris {
             ft.setOnFinished(e -> {
                 App.setRoot("GoodEnding");
             });
-            // TODO volumn 好像沒辦法及時反應到 Audioclip 上
-            float downRate = Setting.backgoundMusicVolumn/(5000/50);
-            Timeline musicFadeOut = new Timeline(new KeyFrame(Duration.millis(50), e -> {
-                backgroundMusic.setVolume(backgroundMusic.getVolume() - downRate);
-            }));
-            musicFadeOut.setCycleCount(5000/50);
-            musicFadeOut.setOnFinished(e -> backgroundMusic.stop());
-            musicFadeOut.play();
-//            backgroundMusic.stop();
+            AudioFadeOut.play(backgroundMusic, Duration.seconds(5));
             ft.play();
-
         }
         else {
             backgroundMusic.stop();
