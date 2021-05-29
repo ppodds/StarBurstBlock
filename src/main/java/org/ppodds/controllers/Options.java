@@ -63,6 +63,7 @@ public class Options implements Initializable {
             AudioClip se = new AudioClip(ResourceManager.getAudio("Confirm.mp3").toString());
             se.setVolume(Setting.soundEffectVolumn);
             se.play();
+            back.setOnAction(null);
             FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), background);
             fadeTransition.setFromValue(1);
             fadeTransition.setToValue(0);

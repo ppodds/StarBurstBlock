@@ -70,6 +70,9 @@ public class Start implements Initializable {
         });
         help.setOnAction((e) -> {
             playSE("Confirm.mp3");
+            help.setOnAction(null);
+            options.setOnAction(null);
+            gameStart.setOnAction(null);
             FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), mainPane);
             fadeTransition.setFromValue(1);
             fadeTransition.setToValue(0);
@@ -78,6 +81,9 @@ public class Start implements Initializable {
         });
         options.setOnAction((e) -> {
             playSE("Confirm.mp3");
+            options.setOnAction(null);
+            help.setOnAction(null);
+            gameStart.setOnAction(null);
             FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), mainPane);
             fadeTransition.setFromValue(1);
             fadeTransition.setToValue(0);
