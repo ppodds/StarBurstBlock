@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.ppodds.core.ResourceManager;
 
 import java.io.IOException;
 
@@ -38,6 +40,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         scene = new Scene(loadFXML("Start"));
+        stage.getIcons().add(new Image(ResourceManager.getImage("icon", "Icon.jpg").toString()));
         stage.setTitle("Star Burst Block");
         stage.setScene(scene);
         stage.show();

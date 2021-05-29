@@ -9,9 +9,47 @@
 
 不過他就是個作業，我應該不會再回來改了吧（；´д｀）ゞ
 
+喜歡的話順便幫我點個星星，我需要那個酷東西。
+
 ## 下載及安裝需求
 
 - 系統需求
     - Java 11 以上
 
 直接雙擊執行
+
+## 遊玩畫面
+
+主畫面
+![](Documents/screenshots/MainPage.JPG)
+
+設定畫面
+![](Documents/screenshots/Options.JPG)
+
+故事片段
+![](Documents/screenshots/Story.JPG)
+
+遊戲本體
+![](Documents/screenshots/Game.JPG)
+
+勝利畫面
+![](Documents/screenshots/Win.JPG)
+
+## 已知bug
+
+在未知情況下動畫撥放會卡住，目前找不到問題。
+
+發現T-Spin轉不進去的，我只能說
+![](Documents/memes/bug.jpg)
+
+目前暫時沒打算加進去，因為我到現在還弄不清楚這些特殊旋轉的判定規則，如果有人願意幫我加的話發個PR吧!
+我一定很感謝你。
+
+## 後記
+
+當初有一些踩到的坑與解決辦法，可以在[這裡](Documents/Note.md)找到。
+
+## 素材來源
+
+[References](Documents/References.md)
+
